@@ -1,0 +1,110 @@
+{
+  "": {
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/master.swiftdeps"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormHelpText.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormRowLabel.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormSliderRow.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/GeneralView.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.dia"
+  },
+  "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ScrollingView.swift": {
+    "dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.d",
+    "object": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.swift.o",
+    "swiftmodule": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView~partial.swiftmodule",
+    "swift-dependencies": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.swiftdeps",
+    "diagnostics": "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.dia"
+  }
+}

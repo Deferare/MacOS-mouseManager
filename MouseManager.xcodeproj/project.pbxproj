@@ -1,0 +1,382 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 60;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		1F4B70A22D6AB0AF00A1B2C3 /* MouseManagerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70A12D6AB0AF00A1B2C3 /* MouseManagerApp.swift */; };
+		1F4B70A42D6AB0AF00A1B2C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70A32D6AB0AF00A1B2C3 /* ContentView.swift */; };
+		1F4B70A62D6AB0AF00A1B2C3 /* SettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70A52D6AB0AF00A1B2C3 /* SettingsStore.swift */; };
+		1F4B70A82D6AB0AF00A1B2C3 /* EventTapManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70A72D6AB0AF00A1B2C3 /* EventTapManager.swift */; };
+		1F4B70AB2D6AB0B700A1B2C3 /* GeneralView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70AA2D6AB0B700A1B2C3 /* GeneralView.swift */; };
+		1F4B70AD2D6AB0B700A1B2C3 /* ButtonsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70AC2D6AB0B700A1B2C3 /* ButtonsView.swift */; };
+		1F4B70AF2D6AB0B700A1B2C3 /* ScrollingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70AE2D6AB0B700A1B2C3 /* ScrollingView.swift */; };
+		1F4B70B12D6AB0B700A1B2C3 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70B02D6AB0B700A1B2C3 /* AboutView.swift */; };
+		1F4B70B42D6AB10A00A1B2C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F4B70B32D6AB10A00A1B2C3 /* Assets.xcassets */; };
+		1F4B70C22D6AC00100A1B2C3 /* PreviewSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70C12D6AC00100A1B2C3 /* PreviewSupport.swift */; };
+		1F4B70D52D6B123400A1B2C3 /* FormHelpText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70D42D6B123400A1B2C3 /* FormHelpText.swift */; };
+		1F4B70D72D6B234500A1B2C3 /* AppSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70D62D6B234500A1B2C3 /* AppSection.swift */; };
+		1F4B70D92D6B9ABC00A1B2C3 /* FormRowLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70D82D6B9ABC00A1B2C3 /* FormRowLabel.swift */; };
+		1F4B70DB2D6C111100A1B2C3 /* EventTapRunLoopHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */; };
+		1F4B70DD2D6C111100A1B2C3 /* SharedTapContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */; };
+		1F4B70E02D6C222200A1B2C3 /* FormSliderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DF2D6C222200A1B2C3 /* FormSliderRow.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		1F4B70992D6AB05A00A1B2C3 /* MouseManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MouseManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F4B709C2D6AB05A00A1B2C3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1F4B70A12D6AB0AF00A1B2C3 /* MouseManagerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MouseManagerApp.swift; path = Sources/MouseManagerApp.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70A32D6AB0AF00A1B2C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentView.swift; path = Sources/ContentView.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70A52D6AB0AF00A1B2C3 /* SettingsStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsStore.swift; path = Sources/SettingsStore.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70A72D6AB0AF00A1B2C3 /* EventTapManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventTapManager.swift; path = Sources/EventTapManager.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70AA2D6AB0B700A1B2C3 /* GeneralView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeneralView.swift; path = Sources/Views/GeneralView.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70AC2D6AB0B700A1B2C3 /* ButtonsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ButtonsView.swift; path = Sources/Views/ButtonsView.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70AE2D6AB0B700A1B2C3 /* ScrollingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScrollingView.swift; path = Sources/Views/ScrollingView.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70B02D6AB0B700A1B2C3 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AboutView.swift; path = Sources/Views/AboutView.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70B32D6AB10A00A1B2C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1F4B70C12D6AC00100A1B2C3 /* PreviewSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PreviewSupport.swift; path = Sources/PreviewSupport.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70D42D6B123400A1B2C3 /* FormHelpText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormHelpText.swift; path = Sources/Views/FormHelpText.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70D62D6B234500A1B2C3 /* AppSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AppSection.swift; path = Sources/Views/AppSection.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70D82D6B9ABC00A1B2C3 /* FormRowLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormRowLabel.swift; path = Sources/Views/FormRowLabel.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventTapRunLoopHost.swift; path = Sources/EventTapRunLoopHost.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedTapContext.swift; path = Sources/SharedTapContext.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70DF2D6C222200A1B2C3 /* FormSliderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormSliderRow.swift; path = Sources/Views/FormSliderRow.swift; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1F4B70962D6AB05A00A1B2C3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		1F4B70902D6AB05A00A1B2C3 = {
+			isa = PBXGroup;
+			children = (
+				1F4B709B2D6AB05A00A1B2C3 /* MouseManager */,
+				1F4B709A2D6AB05A00A1B2C3 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		1F4B709A2D6AB05A00A1B2C3 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B70992D6AB05A00A1B2C3 /* MouseManager.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1F4B709B2D6AB05A00A1B2C3 /* MouseManager */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B709C2D6AB05A00A1B2C3 /* Info.plist */,
+				1F4B70B32D6AB10A00A1B2C3 /* Assets.xcassets */,
+				1F4B70A92D6AB0B700A1B2C3 /* Sources */,
+			);
+			path = MouseManager;
+			sourceTree = "<group>";
+		};
+		1F4B70A92D6AB0B700A1B2C3 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B70A12D6AB0AF00A1B2C3 /* MouseManagerApp.swift */,
+				1F4B70A32D6AB0AF00A1B2C3 /* ContentView.swift */,
+				1F4B70A52D6AB0AF00A1B2C3 /* SettingsStore.swift */,
+				1F4B70A72D6AB0AF00A1B2C3 /* EventTapManager.swift */,
+				1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */,
+				1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */,
+				1F4B70C12D6AC00100A1B2C3 /* PreviewSupport.swift */,
+				1F4B70B22D6AB0B700A1B2C3 /* Views */,
+			);
+			name = Sources;
+			sourceTree = "<group>";
+		};
+		1F4B70B22D6AB0B700A1B2C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1F4B70AA2D6AB0B700A1B2C3 /* GeneralView.swift */,
+				1F4B70AC2D6AB0B700A1B2C3 /* ButtonsView.swift */,
+				1F4B70AE2D6AB0B700A1B2C3 /* ScrollingView.swift */,
+				1F4B70B02D6AB0B700A1B2C3 /* AboutView.swift */,
+				1F4B70D42D6B123400A1B2C3 /* FormHelpText.swift */,
+				1F4B70D82D6B9ABC00A1B2C3 /* FormRowLabel.swift */,
+				1F4B70DF2D6C222200A1B2C3 /* FormSliderRow.swift */,
+				1F4B70D62D6B234500A1B2C3 /* AppSection.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		1F4B70982D6AB05A00A1B2C3 /* MouseManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1F4B70A02D6AB05A00A1B2C3 /* Build configuration list for PBXNativeTarget "MouseManager" */;
+			buildPhases = (
+				1F4B70952D6AB05A00A1B2C3 /* Sources */,
+				1F4B70962D6AB05A00A1B2C3 /* Frameworks */,
+				1F4B70972D6AB05A00A1B2C3 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MouseManager;
+			productName = MouseManager;
+			productReference = 1F4B70992D6AB05A00A1B2C3 /* MouseManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		1F4B70912D6AB05A00A1B2C3 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1500;
+				LastUpgradeCheck = 1500;
+				TargetAttributes = {
+					1F4B70982D6AB05A00A1B2C3 = {
+						CreatedOnToolsVersion = 15.0;
+					};
+				};
+			};
+			buildConfigurationList = 1F4B70942D6AB05A00A1B2C3 /* Build configuration list for PBXProject "MouseManager" */;
+			compatibilityVersion = "Xcode 15.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 1F4B70902D6AB05A00A1B2C3;
+			productRefGroup = 1F4B709A2D6AB05A00A1B2C3 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				1F4B70982D6AB05A00A1B2C3 /* MouseManager */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		1F4B70972D6AB05A00A1B2C3 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F4B70B42D6AB10A00A1B2C3 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1F4B70952D6AB05A00A1B2C3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1F4B70A22D6AB0AF00A1B2C3 /* MouseManagerApp.swift in Sources */,
+				1F4B70A42D6AB0AF00A1B2C3 /* ContentView.swift in Sources */,
+				1F4B70A62D6AB0AF00A1B2C3 /* SettingsStore.swift in Sources */,
+				1F4B70A82D6AB0AF00A1B2C3 /* EventTapManager.swift in Sources */,
+				1F4B70DB2D6C111100A1B2C3 /* EventTapRunLoopHost.swift in Sources */,
+				1F4B70DD2D6C111100A1B2C3 /* SharedTapContext.swift in Sources */,
+				1F4B70C22D6AC00100A1B2C3 /* PreviewSupport.swift in Sources */,
+				1F4B70AB2D6AB0B700A1B2C3 /* GeneralView.swift in Sources */,
+				1F4B70AD2D6AB0B700A1B2C3 /* ButtonsView.swift in Sources */,
+				1F4B70AF2D6AB0B700A1B2C3 /* ScrollingView.swift in Sources */,
+				1F4B70B12D6AB0B700A1B2C3 /* AboutView.swift in Sources */,
+				1F4B70D52D6B123400A1B2C3 /* FormHelpText.swift in Sources */,
+				1F4B70D72D6B234500A1B2C3 /* AppSection.swift in Sources */,
+				1F4B70D92D6B9ABC00A1B2C3 /* FormRowLabel.swift in Sources */,
+				1F4B70E02D6C222200A1B2C3 /* FormSliderRow.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		1F4B709D2D6AB05A00A1B2C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		1F4B709E2D6AB05A00A1B2C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		1F4B709F2D6AB05A00A1B2C3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 23N5J9ACJ7;
+				INFOPLIST_FILE = MouseManager/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deferare.MouseManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Debug;
+		};
+		1F4B70A12D6AB05A00A1B2C3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_ASSET_PATHS = "";
+				DEVELOPMENT_TEAM = 23N5J9ACJ7;
+				INFOPLIST_FILE = MouseManager/Info.plist;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 26.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.deferare.MouseManager;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = macosx;
+				SWIFT_VERSION = 5.9;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1F4B70942D6AB05A00A1B2C3 /* Build configuration list for PBXProject "MouseManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F4B709D2D6AB05A00A1B2C3 /* Debug */,
+				1F4B709E2D6AB05A00A1B2C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1F4B70A02D6AB05A00A1B2C3 /* Build configuration list for PBXNativeTarget "MouseManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1F4B709F2D6AB05A00A1B2C3 /* Debug */,
+				1F4B70A12D6AB05A00A1B2C3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 1F4B70912D6AB05A00A1B2C3 /* Project object */;
+}

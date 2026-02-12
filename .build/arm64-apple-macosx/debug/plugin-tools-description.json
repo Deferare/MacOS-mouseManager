@@ -1,0 +1,529 @@
+{
+  "builtTestProducts" : [
+
+  ],
+  "copyCommands" : {
+
+  },
+  "explicitTargetDependencyImportCheckingMode" : {
+    "none" : {
+
+    }
+  },
+  "generatedSourceTargetSet" : [
+
+  ],
+  "pluginDescriptions" : [
+
+  ],
+  "swiftCommands" : {
+    "C.MouseManager-arm64-apple-macosx26.0-debug.module" : {
+      "executable" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "fileList" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/sources",
+      "importPath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/Modules",
+      "inputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormHelpText.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormRowLabel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormSliderRow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/GeneralView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ScrollingView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/sources"
+        }
+      ],
+      "isLibrary" : false,
+      "moduleName" : "MouseManager",
+      "moduleOutputPath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/Modules/MouseManager.swiftmodule",
+      "objects" : [
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.swift.o"
+      ],
+      "otherArguments" : [
+        "-target",
+        "arm64-apple-macosx13.0",
+        "-incremental",
+        "-enable-batch-mode",
+        "-serialize-diagnostics",
+        "-index-store-path",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/index/store",
+        "-Onone",
+        "-enable-testing",
+        "-j10",
+        "-DSWIFT_PACKAGE",
+        "-DDEBUG",
+        "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+        "-module-cache-path",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/ModuleCache",
+        "-parseable-output",
+        "-Xfrontend",
+        "-entry-point-function-name",
+        "-Xfrontend",
+        "MouseManager_main",
+        "-swift-version",
+        "5",
+        "-plugin-path",
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-F",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-I",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-L",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+        "-g",
+        "-Xcc",
+        "-isysroot",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+        "-Xcc",
+        "-F",
+        "-Xcc",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+        "-Xcc",
+        "-fPIC",
+        "-Xcc",
+        "-g",
+        "-package-name",
+        "macos_mousemanager"
+      ],
+      "outputFileMapPath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/output-file-map.json",
+      "outputs" : [
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/Modules/MouseManager.swiftmodule"
+        }
+      ],
+      "prepareForIndexing" : false,
+      "sources" : [
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormHelpText.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormRowLabel.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormSliderRow.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/GeneralView.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ScrollingView.swift"
+      ],
+      "tempsPath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build",
+      "wholeModuleOptimization" : false
+    }
+  },
+  "swiftFrontendCommands" : {
+
+  },
+  "swiftTargetScanArgs" : {
+    "MouseManager" : [
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+      "-module-name",
+      "MouseManager",
+      "-package-name",
+      "macos_mousemanager",
+      "-c",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormHelpText.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormRowLabel.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormSliderRow.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/GeneralView.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ScrollingView.swift",
+      "-I",
+      "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/Modules",
+      "-target",
+      "arm64-apple-macosx13.0",
+      "-incremental",
+      "-enable-batch-mode",
+      "-serialize-diagnostics",
+      "-index-store-path",
+      "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/index/store",
+      "-Onone",
+      "-enable-testing",
+      "-j10",
+      "-DSWIFT_PACKAGE",
+      "-DDEBUG",
+      "-DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE",
+      "-module-cache-path",
+      "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/ModuleCache",
+      "-parseable-output",
+      "-Xfrontend",
+      "-entry-point-function-name",
+      "-Xfrontend",
+      "MouseManager_main",
+      "-swift-version",
+      "5",
+      "-plugin-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing",
+      "-sdk",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-F",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-I",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-L",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib",
+      "-g",
+      "-Xcc",
+      "-isysroot",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX26.2.sdk",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks",
+      "-Xcc",
+      "-F",
+      "-Xcc",
+      "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/PrivateFrameworks",
+      "-Xcc",
+      "-fPIC",
+      "-Xcc",
+      "-g",
+      "-package-name",
+      "macos_mousemanager",
+      "-driver-use-frontend-path",
+      "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+    ]
+  },
+  "targetDependencyMap" : {
+    "MouseManager" : [
+
+    ]
+  },
+  "testDiscoveryCommands" : {
+
+  },
+  "testEntryPointCommands" : {
+
+  },
+  "traitConfiguration" : {
+    "default" : {
+
+    }
+  },
+  "writeCommands" : {
+    "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager-entitlement.plist" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<entitlement-plist>"
+        },
+        {
+          "kind" : "virtual",
+          "name" : "<com.apple.security.get-task-allow>"
+        }
+      ],
+      "outputFilePath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager-entitlement.plist"
+    },
+    "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/sources" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<sources-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormHelpText.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormRowLabel.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/FormSliderRow.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/GeneralView.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ScrollingView.swift"
+        }
+      ],
+      "outputFilePath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/sources"
+    },
+    "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.product/Objects.LinkFileList" : {
+      "alwaysOutOfDate" : false,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<link-file-list>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormHelpText.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormRowLabel.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/FormSliderRow.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/GeneralView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollingView.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o"
+        }
+      ],
+      "outputFilePath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.product/Objects.LinkFileList"
+    },
+    "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt" : {
+      "alwaysOutOfDate" : true,
+      "inputs" : [
+        {
+          "kind" : "virtual",
+          "name" : "<swift-get-version>"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc"
+        }
+      ],
+      "outputFilePath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/swift-version--58304C5D6DBC2206.txt"
+    }
+  }
+}
