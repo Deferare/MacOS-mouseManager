@@ -14,13 +14,16 @@ final class SharedTapContext {
     private static let middleDragAdaptiveGainKnee: Double = 9.0
     private static let middleDragPrecisionDampingSpan: Double = 0.10
     private static let middleDragPrecisionKnee: Double = 1.6
+    private static let swallowMiddleButtonBit: UInt8 = 1 << 0
+    private static let swallowButton4Bit: UInt8 = 1 << 1
+    private static let swallowButton5Bit: UInt8 = 1 << 2
 
     private let lock = OSAllocatedUnfairLock()
     private var settings: SettingsSnapshot
     private let scrollSmoother = ScrollSmoother()
     private let middleDrag = MiddleDragScrollState()
     private let middleDragMomentum = MiddleDragMomentumAnimator()
-    private var swallowedButtonNumbers = Set<Int64>()
+    private var swallowedButtonsMask: UInt8 = 0
     private var eventTap: CFMachPort?
     private var interceptionEnabled: Bool = true
 
@@ -66,7 +69,7 @@ final class SharedTapContext {
         let changed = interceptionEnabled != enabled
         interceptionEnabled = enabled
         if !enabled {
-            swallowedButtonNumbers.removeAll()
+            swallowedButtonsMask = 0
         }
         lock.unlock()
 
@@ -266,7 +269,7 @@ final class SharedTapContext {
         case .otherMouseDown:
             if buttonNumber == 2, settings.middleDragScrollingEnabled {
                 middleDragMomentum.cancel()
-                middleDrag.begin(event: event, middleAction: settings.middleClickButtonAction)
+                middleDrag.begin(event: event, middleAction: settings.middleClickAction)
                 return nil
             }
             if handleOtherButtonDown(buttonNumber: buttonNumber, settings: settings) {
@@ -310,9 +313,15 @@ final class SharedTapContext {
                 }
                 return nil
             }
-            lock.lock()
-            let shouldSwallow = swallowedButtonNumbers.remove(buttonNumber) != nil
-            lock.unlock()
+            let shouldSwallow: Bool
+            if let bit = Self.swallowBit(for: buttonNumber) {
+                lock.lock()
+                shouldSwallow = (swallowedButtonsMask & bit) != 0
+                swallowedButtonsMask &= ~bit
+                lock.unlock()
+            } else {
+                shouldSwallow = false
+            }
             return shouldSwallow ? nil : Unmanaged.passUnretained(event)
 
         default:
@@ -338,17 +347,28 @@ final class SharedTapContext {
         }
 
         perform(action: action)
-        lock.lock()
-        swallowedButtonNumbers.insert(buttonNumber)
-        lock.unlock()
+        if let bit = Self.swallowBit(for: buttonNumber) {
+            lock.lock()
+            swallowedButtonsMask |= bit
+            lock.unlock()
+        }
         return true
     }
 
     private func mappedAction(for buttonNumber: Int64, settings: SettingsSnapshot) -> ButtonAction? {
         switch buttonNumber {
-        case 2: return settings.middleClickButtonAction
-        case 3: return settings.button4ButtonAction
-        case 4: return settings.button5ButtonAction
+        case 2: return settings.middleClickAction
+        case 3: return settings.button4ClickAction
+        case 4: return settings.button5ClickAction
+        default: return nil
+        }
+    }
+
+    private static func swallowBit(for buttonNumber: Int64) -> UInt8? {
+        switch buttonNumber {
+        case 2: return swallowMiddleButtonBit
+        case 3: return swallowButton4Bit
+        case 4: return swallowButton5Bit
         default: return nil
         }
     }

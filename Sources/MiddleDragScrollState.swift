@@ -2,6 +2,8 @@ import Cocoa
 import Foundation
 
 final class MiddleDragScrollState {
+    private static let timestampToSecondsScale: Double = 1.0 / 1_000_000_000.0
+
     private var didDrag: Bool = false
     private var accumulatedAbsX: Double = 0
     private var accumulatedAbsY: Double = 0
@@ -43,7 +45,7 @@ final class MiddleDragScrollState {
     func begin(event: CGEvent, middleAction: ButtonAction) {
         resetState()
         lastLocation = event.location
-        lastTimestamp = ProcessInfo.processInfo.systemUptime
+        lastTimestamp = eventTimestampSeconds(event)
         self.middleAction = middleAction
         isActive = true
     }
@@ -68,7 +70,7 @@ final class MiddleDragScrollState {
             didDrag = true
         }
 
-        let now = ProcessInfo.processInfo.systemUptime
+        let now = eventTimestampSeconds(event)
         if didDrag, let lastTimestamp {
             let dt = max(1.0 / 500.0, min(0.05, now - lastTimestamp))
             let rawVelocityX = dx / dt
@@ -113,5 +115,13 @@ final class MiddleDragScrollState {
 
     func cancel() {
         resetState()
+    }
+
+    private func eventTimestampSeconds(_ event: CGEvent) -> TimeInterval {
+        let timestamp = event.timestamp
+        guard timestamp > 0 else {
+            return ProcessInfo.processInfo.systemUptime
+        }
+        return Double(timestamp) * Self.timestampToSecondsScale
     }
 }

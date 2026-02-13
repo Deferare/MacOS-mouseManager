@@ -120,9 +120,9 @@ final class SettingsStore: ObservableObject {
             middleDragInertiaStrength: middleDragInertiaStrength,
             reverseDirection: reverseDirection,
             speedMultiplier: speedMultiplier,
-            middleClickAction: middleClickAction,
-            button4ClickAction: button4ClickAction,
-            button5ClickAction: button5ClickAction
+            middleClickAction: middleClickButtonAction,
+            button4ClickAction: button4ButtonAction,
+            button5ClickAction: button5ButtonAction
         )
     }
 }
@@ -135,26 +135,14 @@ struct SettingsSnapshot: Equatable {
     let middleDragInertiaStrength: Double
     let reverseDirection: Bool
     let speedMultiplier: Double
-    let middleClickAction: String
-    let button4ClickAction: String
-    let button5ClickAction: String
-
-    var middleClickButtonAction: ButtonAction {
-        ButtonAction(storedValue: middleClickAction)
-    }
-
-    var button4ButtonAction: ButtonAction {
-        ButtonAction(storedValue: button4ClickAction)
-    }
-
-    var button5ButtonAction: ButtonAction {
-        ButtonAction(storedValue: button5ClickAction)
-    }
+    let middleClickAction: ButtonAction
+    let button4ClickAction: ButtonAction
+    let button5ClickAction: ButtonAction
 
     var hasButtonActions: Bool {
-        middleClickButtonAction != .none ||
-            button4ButtonAction != .none ||
-            button5ButtonAction != .none
+        middleClickAction != .none ||
+            button4ClickAction != .none ||
+            button5ClickAction != .none
     }
 }
 
