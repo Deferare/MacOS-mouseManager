@@ -22,16 +22,36 @@ final class EventTapManager: ObservableObject {
 
     private static let trustPollInterval: TimeInterval = 0.5
     private static let permissionGrantPollTimeout: TimeInterval = 45.0
-    private static let eventMask: CGEventMask =
-        (1 << CGEventType.scrollWheel.rawValue) |
-        (1 << CGEventType.mouseMoved.rawValue) |
-        (1 << CGEventType.otherMouseDown.rawValue) |
-        (1 << CGEventType.otherMouseUp.rawValue) |
-        (1 << CGEventType.otherMouseDragged.rawValue)
+    private static func eventMask(for settings: SettingsSnapshot) -> CGEventMask {
+        var mask: CGEventMask =
+            (1 << CGEventType.scrollWheel.rawValue)
+
+        let hasButtonActions =
+            settings.middleClickButtonAction != .none ||
+            settings.button4ButtonAction != .none ||
+            settings.button5ButtonAction != .none
+
+        if settings.middleDragScrollingEnabled || hasButtonActions {
+            mask |=
+                (1 << CGEventType.otherMouseDown.rawValue) |
+                (1 << CGEventType.otherMouseUp.rawValue)
+        }
+
+        if settings.middleDragScrollingEnabled {
+            // Some devices do not emit otherMouseDragged while the middle button is held,
+            // so we also listen for mouseMoved to keep drag scrolling responsive.
+            mask |=
+                (1 << CGEventType.otherMouseDragged.rawValue) |
+                (1 << CGEventType.mouseMoved.rawValue)
+        }
+
+        return mask
+    }
 
     private let tapRunLoopHost = EventTapRunLoopHost()
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
+    private var activeEventMask: CGEventMask?
     private var tapContext: SharedTapContext?
     private var lastSettingsSnapshot: SettingsSnapshot?
     private var trustPollTimer: Timer?
@@ -82,10 +102,17 @@ final class EventTapManager: ObservableObject {
             return
         }
 
+        let desiredEventMask = Self.eventMask(for: snapshot)
+        if eventTap != nil, activeEventMask != desiredEventMask {
+            // Avoid paying the callback cost for high-frequency event classes when the
+            // current settings don't require them (notably mouseMoved).
+            stop()
+        }
+
         if settingsChanged, let tapContext {
             tapContext.updateSettings(snapshot)
         }
-        if !startIfNeeded(settings: snapshot) {
+        if !startIfNeeded(settings: snapshot, eventMask: desiredEventMask) {
             // If event tap creation fails, permission state is effectively unusable.
             handleTapStartFailure(using: settings)
             updateTrustPollingState()
@@ -188,7 +215,8 @@ final class EventTapManager: ObservableObject {
             if let tapContext {
                 tapContext.updateSettings(snapshot)
             }
-            if !startIfNeeded(settings: snapshot) {
+            let desiredEventMask = Self.eventMask(for: snapshot)
+            if !startIfNeeded(settings: snapshot, eventMask: desiredEventMask) {
                 handleTapStartFailure(using: settingsStore)
             }
         }
@@ -212,7 +240,7 @@ final class EventTapManager: ObservableObject {
         apply(settings: settingsStore)
     }
 
-    private func startIfNeeded(settings: SettingsSnapshot) -> Bool {
+    private func startIfNeeded(settings: SettingsSnapshot, eventMask: CGEventMask) -> Bool {
         if eventTap != nil { return true }
 
         let context = SharedTapContext(settings: settings)
@@ -230,16 +258,18 @@ final class EventTapManager: ObservableObject {
             tap: .cgSessionEventTap,
             place: .headInsertEventTap,
             options: .defaultTap,
-            eventsOfInterest: Self.eventMask,
+            eventsOfInterest: eventMask,
             callback: callback,
             userInfo: refcon
         ) else {
             tapContext = nil
+            activeEventMask = nil
             return false
         }
         context.attachEventTap(tap)
 
         eventTap = tap
+        activeEventMask = eventMask
         runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
         if let runLoopSource {
             tapRunLoopHost.addSource(runLoopSource)
@@ -267,6 +297,7 @@ final class EventTapManager: ObservableObject {
         }
         runLoopSource = nil
         eventTap = nil
+        activeEventMask = nil
         tapContext = nil
     }
 }

@@ -426,10 +426,15 @@ private final class ScrollSmoother {
     private var outputFlags: CGEventFlags = []
     private var smoothnessLevel: Double = 0.33
     private var nominalFrameDurationSeconds: Double = 1.0 / 120.0
+    private var cachedFrameAlpha: Double = 0
     private var quietTailTicks: Int = 0
 
     private let quietTailTicksToStop: Int = 8
     private let carryQuietThreshold: Double = 0.45
+
+    init() {
+        updateCachedFrameAlpha()
+    }
 
     private func clearBufferedMotion() {
         remainingX = 0
@@ -473,6 +478,7 @@ private final class ScrollSmoother {
             guard self.smoothnessLevel != level else { return }
             self.smoothnessLevel = level
             self.tuning = Tuning.from(level: level)
+            self.updateCachedFrameAlpha()
         }
     }
 
@@ -482,6 +488,7 @@ private final class ScrollSmoother {
             if self.smoothnessLevel != smoothnessLevel {
                 self.smoothnessLevel = smoothnessLevel
                 self.tuning = Tuning.from(level: smoothnessLevel)
+                self.updateCachedFrameAlpha()
             }
             self.outputFlags = flags
 
@@ -518,6 +525,7 @@ private final class ScrollSmoother {
                 } else {
                     nominalFrameDurationSeconds = 1.0 / 120.0
                 }
+                updateCachedFrameAlpha()
             }
         }
 
@@ -562,7 +570,12 @@ private final class ScrollSmoother {
 
         // Smooth by distributing remaining delta with a 1st-order low-pass style step response.
         // alpha = 1 - exp(-dt/tau)  -> fraction to emit this frame.
-        let alpha = 1.0 - exp(-dtSeconds / tuning.tauSeconds)
+        let alpha: Double
+        if dt == nil, displayLink != nil {
+            alpha = cachedFrameAlpha
+        } else {
+            alpha = 1.0 - exp(-dtSeconds / tuning.tauSeconds)
+        }
 
         let frameX = remainingX * alpha
         let frameY = remainingY * alpha
@@ -598,6 +611,10 @@ private final class ScrollSmoother {
         } else {
             quietTailTicks = 0
         }
+    }
+
+    private func updateCachedFrameAlpha() {
+        cachedFrameAlpha = 1.0 - exp(-nominalFrameDurationSeconds / tuning.tauSeconds)
     }
 
     private func postSmoothedScroll(deltaX: Double, deltaY: Double, continuous: Bool, intScaleX: Double, intScaleY: Double) -> Bool {
@@ -772,6 +789,7 @@ private final class MiddleDragMomentumAnimator {
     private var carryScaledY: Double = 0
     private var outputFlags: CGEventFlags = []
     private var strengthLevel: Double = 0.5
+    private var strengthResponse: Double = pow(0.5, 0.7)
     private var lastTickTime: TimeInterval?
     private var startTime: TimeInterval?
     private var launchSpeed: Double = 0
@@ -794,6 +812,7 @@ private final class MiddleDragMomentumAnimator {
     func updateStrength(level: Double) {
         queue.async {
             self.strengthLevel = max(0.0, min(1.0, level))
+            self.strengthResponse = pow(self.strengthLevel, 0.7)
             if self.strengthLevel <= 0.0 {
                 self.stopLocked()
             }
@@ -930,10 +949,6 @@ private final class MiddleDragMomentumAnimator {
         let lowSpeedRate = 0.9938 + (0.0018 * strengthResponse)
         let highSpeedRate = 0.9975 + (0.0017 * strengthResponse)
         return lowSpeedRate + ((highSpeedRate - lowSpeedRate) * curve)
-    }
-
-    private var strengthResponse: Double {
-        pow(max(0.0, min(1.0, strengthLevel)), 0.7)
     }
 
     private func momentumFrameShapingGain(now: TimeInterval, speed: Double) -> Double {
