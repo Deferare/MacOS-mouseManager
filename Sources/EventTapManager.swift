@@ -227,8 +227,11 @@ final class EventTapManager: ObservableObject {
     }
 
     private func stop() {
+        tapContext?.setInterceptionEnabled(false)
+
         if let tap = eventTap {
             CGEvent.tapEnable(tap: tap, enable: false)
+            CFMachPortInvalidate(tap)
         }
         if let runLoopSource {
             tapRunLoopHost.removeSource(runLoopSource)

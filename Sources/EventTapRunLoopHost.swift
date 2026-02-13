@@ -24,33 +24,43 @@ final class EventTapRunLoopHost {
     }
 
     func addSource(_ source: CFRunLoopSource) {
-        performOnRunLoop { runLoop in
+        performOnRunLoop(waitUntilDone: false) { runLoop in
             CFRunLoopAddSource(runLoop, source, .commonModes)
         }
     }
 
     func removeSource(_ source: CFRunLoopSource) {
-        performOnRunLoop { runLoop in
+        // Removing the source synchronously prevents teardown races where callback
+        // userInfo can outlive the Swift owner on a different thread.
+        performOnRunLoop(waitUntilDone: true) { runLoop in
             CFRunLoopRemoveSource(runLoop, source, .commonModes)
         }
     }
 
     private func stop() {
-        performOnRunLoop { runLoop in
+        performOnRunLoop(waitUntilDone: true) { runLoop in
             CFRunLoopStop(runLoop)
         }
     }
 
-    private func performOnRunLoop(_ block: @escaping (CFRunLoop) -> Void) {
+    private func performOnRunLoop(waitUntilDone: Bool, _ block: @escaping (CFRunLoop) -> Void) {
         stateLock.lock()
         let currentRunLoop = runLoop
         stateLock.unlock()
 
         guard let currentRunLoop else { return }
+        if waitUntilDone, Thread.current == thread {
+            block(currentRunLoop)
+            return
+        }
+
+        let done = waitUntilDone ? DispatchSemaphore(value: 0) : nil
         CFRunLoopPerformBlock(currentRunLoop, CFRunLoopMode.commonModes.rawValue) {
             block(currentRunLoop)
+            done?.signal()
         }
         CFRunLoopWakeUp(currentRunLoop)
+        done?.wait()
     }
 
     private func threadMain() {
