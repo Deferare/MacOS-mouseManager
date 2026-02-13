@@ -32,7 +32,7 @@ struct ScrollingView: View {
                     "Multiplier",
                     subtitle: "Applies to both vertical and horizontal scroll.",
                     value: $settings.speedMultiplier,
-                    range: 0.5...6.0,
+                    range: 0.5...10.0,
                     step: 0.01
                 ) { value in
                     String(format: "%.2f×", value)

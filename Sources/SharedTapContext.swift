@@ -12,6 +12,12 @@ final class SharedTapContext {
     private static let wheelAdaptiveGainLowSpeedBoost: Double = 1.55
     private static let wheelAdaptiveGainHighSpeedDamping: Double = 0.70
     private static let wheelAdaptiveGainKnee: Double = 2.0
+    private static let middleDragGainX: Double = 0.98
+    private static let middleDragGainY: Double = 1.45
+    private static let middleDragAdaptiveGainSpan: Double = 0.22
+    private static let middleDragAdaptiveGainKnee: Double = 9.0
+    private static let middleDragPrecisionDampingSpan: Double = 0.10
+    private static let middleDragPrecisionKnee: Double = 1.6
 
     private let lock = NSLock()
     private var settings: SettingsSnapshot
@@ -218,9 +224,15 @@ final class SharedTapContext {
     }
 
     private func adjustMiddleDrag(deltaX: Double, deltaY: Double, reverseDirection: Bool) -> (dx: Double, dy: Double) {
+        // Apply low-speed precision damping + high-speed gain for a trackpad-like hand feel.
+        let magnitude = hypot(deltaX, deltaY)
+        let adaptiveGain = 1.0 + (Self.middleDragAdaptiveGainSpan * (1.0 - exp(-magnitude / Self.middleDragAdaptiveGainKnee)))
+        let precisionDamping = 1.0 - (Self.middleDragPrecisionDampingSpan * exp(-magnitude / Self.middleDragPrecisionKnee))
+        let response = adaptiveGain * precisionDamping
+
         // Middle-button drag is touch-like and intentionally stronger on Y.
-        var adjustedX = deltaX
-        var adjustedY = deltaY * 1.6
+        var adjustedX = deltaX * Self.middleDragGainX * response
+        var adjustedY = deltaY * Self.middleDragGainY * response
         if reverseDirection {
             adjustedX = -adjustedX
             adjustedY = -adjustedY
@@ -230,7 +242,7 @@ final class SharedTapContext {
 
     private func handleMiddleDragScroll(deltaX: Double, deltaY: Double, reverseDirection: Bool) {
         let adjusted = adjustMiddleDrag(deltaX: deltaX, deltaY: deltaY, reverseDirection: reverseDirection)
-        postImmediateScroll(deltaX: adjusted.dx, deltaY: adjusted.dy, continuous: true, intScaleX: 1.0, intScaleY: 4.0)
+        postImmediateScroll(deltaX: adjusted.dx, deltaY: adjusted.dy, continuous: true, intScaleX: 10.0, intScaleY: 12.0)
     }
 
     private func handleOtherButtons(type: CGEventType, event: CGEvent, settings: SettingsSnapshot) -> Unmanaged<CGEvent>? {
@@ -400,14 +412,19 @@ private final class ScrollSmoother {
     private var continuous: Bool = true
     private var tuning = Tuning.defaultValue
     private var outputFlags: CGEventFlags = []
-    private var smoothnessLevel: Double = 0.68
+    private var smoothnessLevel: Double = 0.33
     private var nominalFrameDurationSeconds: Double = 1.0 / 120.0
+    private var quietTailTicks: Int = 0
+
+    private let quietTailTicksToStop: Int = 8
+    private let carryQuietThreshold: Double = 0.45
 
     private func clearBufferedMotion() {
         remainingX = 0
         remainingY = 0
         carryScaledX = 0
         carryScaledY = 0
+        quietTailTicks = 0
     }
 
     private struct Tuning {
@@ -416,16 +433,16 @@ private final class ScrollSmoother {
         let outputScaleX: Double
         let outputScaleY: Double
 
-        static let defaultValue = from(level: 0.68)
+        static let defaultValue = from(level: 0.33)
 
         static func from(level: Double) -> Tuning {
             let s = max(0.0, min(1.0, level))
-            let tauSeconds = 0.055 + (0.150 * s)
-            let stopEpsilon = 0.0026 - (0.0022 * s)
+            let tauSeconds = 0.070 + (0.185 * s)
+            let stopEpsilon = 0.00085 - (0.00065 * s)
             let outputScale = 10.0 + (8.0 * s)
             return Tuning(
                 tauSeconds: tauSeconds,
-                stopEpsilon: max(0.00025, stopEpsilon),
+                stopEpsilon: max(0.00008, stopEpsilon),
                 outputScaleX: outputScale,
                 outputScaleY: outputScale
             )
@@ -459,6 +476,7 @@ private final class ScrollSmoother {
             // Accumulate impulse to be smoothed out over subsequent frames.
             self.remainingX += deltaX
             self.remainingY += deltaY
+            self.quietTailTicks = 0
 
             self.startIfNeeded()
         }
@@ -539,36 +557,45 @@ private final class ScrollSmoother {
         remainingX -= frameX
         remainingY -= frameY
 
-        // Stop when it's effectively zero.
-        if abs(remainingX) < tuning.stopEpsilon && abs(remainingY) < tuning.stopEpsilon {
-            remainingX = 0
-            remainingY = 0
-            flushCarryIfNeeded()
-            stopIfNeeded()
-        }
-
-        // Preserve tiny movement in carry and emit once enough accumulates.
-        if abs(frameX) < 0.000_1 && abs(frameY) < 0.000_1 {
-            return
-        }
-
-        postSmoothedScroll(
+        let emitted = postSmoothedScroll(
             deltaX: frameX,
             deltaY: frameY,
             continuous: continuous,
             intScaleX: tuning.outputScaleX,
             intScaleY: tuning.outputScaleY
         )
+
+        // Keep a short quiet tail so the end settles naturally instead of snapping.
+        if abs(remainingX) < tuning.stopEpsilon && abs(remainingY) < tuning.stopEpsilon {
+            remainingX = 0
+            remainingY = 0
+            if emitted {
+                quietTailTicks = 0
+            } else if abs(carryScaledX) < carryQuietThreshold && abs(carryScaledY) < carryQuietThreshold {
+                quietTailTicks += 1
+            } else {
+                quietTailTicks = 0
+            }
+
+            if quietTailTicks >= quietTailTicksToStop {
+                carryScaledX = 0
+                carryScaledY = 0
+                quietTailTicks = 0
+                stopIfNeeded()
+            }
+        } else {
+            quietTailTicks = 0
+        }
     }
 
-    private func postSmoothedScroll(deltaX: Double, deltaY: Double, continuous: Bool, intScaleX: Double, intScaleY: Double) {
+    private func postSmoothedScroll(deltaX: Double, deltaY: Double, continuous: Bool, intScaleX: Double, intScaleY: Double) -> Bool {
         carryScaledX += deltaX * intScaleX
         carryScaledY += deltaY * intScaleY
 
         let intX = Int32(carryScaledX.rounded())
         let intY = Int32(carryScaledY.rounded())
         if intX == 0 && intY == 0 {
-            return
+            return false
         }
 
         carryScaledX -= Double(intX)
@@ -581,23 +608,7 @@ private final class ScrollSmoother {
             intScaleY: intScaleY,
             flags: outputFlags
         )
-    }
-
-    private func flushCarryIfNeeded() {
-        let flushX = Int32(carryScaledX.rounded())
-        let flushY = Int32(carryScaledY.rounded())
-        guard flushX != 0 || flushY != 0 else { return }
-
-        carryScaledX = 0
-        carryScaledY = 0
-        Self.postScroll(
-            deltaX: Double(flushX) / tuning.outputScaleX,
-            deltaY: Double(flushY) / tuning.outputScaleY,
-            continuous: continuous,
-            intScaleX: tuning.outputScaleX,
-            intScaleY: tuning.outputScaleY,
-            flags: outputFlags
-        )
+        return true
     }
 
     static func postScroll(deltaX: Double, deltaY: Double, continuous: Bool, intScaleX: Double, intScaleY: Double, flags: CGEventFlags = []) {
@@ -636,9 +647,9 @@ private final class MiddleDragScrollState {
     private var middleAction: ButtonAction?
 
     static let syntheticUserDataTag: Int64 = 0x4D4D464D // "MMFM"
-    private let dragThreshold: Double = 3.0
-    private let velocityFilterBlend: Double = 0.55
-    private let minimumMomentumSpeed: Double = 140.0
+    private let dragThreshold: Double = 2.4
+    private let velocityFilterBlend: Double = 0.46
+    private let minimumMomentumSpeed: Double = 112.0
     private(set) var isActive: Bool = false
 
     enum ClickBehavior {
@@ -750,17 +761,23 @@ private final class MiddleDragMomentumAnimator {
     private var outputFlags: CGEventFlags = []
     private var strengthLevel: Double = 0.5
     private var lastTickTime: TimeInterval?
+    private var startTime: TimeInterval?
+    private var launchSpeed: Double = 0
     private var quietTicks: Int = 0
 
     private static let minimumDtSeconds: Double = 1.0 / 240.0
     private static let maximumDtSeconds: Double = 1.0 / 30.0
-    private let momentumOutputScaleX: Double = 28.0
-    private let momentumOutputScaleY: Double = 32.0
+    private let momentumOutputScaleX: Double = 34.0
+    private let momentumOutputScaleY: Double = 38.0
     private let quietTicksToStop: Int = 20
-    private let minimumLaunchSpeed: Double = 28.0
-    private let minimumActiveSpeed: Double = 0.9
-    private let maxLaunchSpeed: Double = 6_800.0
-    private let decelerationReferenceSpeed: Double = 2_600.0
+    private let minimumLaunchSpeed: Double = 20.0
+    private let minimumActiveSpeed: Double = 0.75
+    private let maxLaunchSpeed: Double = 7_200.0
+    private let decelerationReferenceSpeed: Double = 2_300.0
+    private let easeInDurationSeconds: Double = 0.10
+    private let easeOutStartNormalizedSpeed: Double = 0.34
+    private let introMinGain: Double = 0.74
+    private let tailMinGain: Double = 0.78
 
     func updateStrength(level: Double) {
         queue.async {
@@ -795,6 +812,7 @@ private final class MiddleDragMomentumAnimator {
             self.outputFlags = flags
             self.velocityX = launchVX
             self.velocityY = launchVY
+            self.launchSpeed = speed
             self.startTimerIfNeeded()
         }
     }
@@ -809,6 +827,7 @@ private final class MiddleDragMomentumAnimator {
         if timer != nil { return }
 
         lastTickTime = nil
+        startTime = nil
         quietTicks = 0
         let newTimer = DispatchSource.makeTimerSource(queue: queue)
         // Run fast enough not to under-sample high-refresh displays; per-tick dt
@@ -837,8 +856,12 @@ private final class MiddleDragMomentumAnimator {
         lastTickTime = now
 
         let speed = hypot(velocityX, velocityY)
-        let frameX = velocityX * dtSeconds
-        let frameY = velocityY * dtSeconds
+        if startTime == nil {
+            startTime = now
+        }
+        let frameShapingGain = momentumFrameShapingGain(now: now, speed: speed)
+        let frameX = velocityX * dtSeconds * frameShapingGain
+        let frameY = velocityY * dtSeconds * frameShapingGain
         let emitted = postMomentumScroll(deltaX: frameX, deltaY: frameY)
 
         // Use speed-adaptive decay: glide at high speed, then settle decisively near zero.
@@ -881,26 +904,9 @@ private final class MiddleDragMomentumAnimator {
         return true
     }
 
-    private func flushCarryIfNeeded() {
-        let flushX = Int32(carryScaledX.rounded())
-        let flushY = Int32(carryScaledY.rounded())
-        guard flushX != 0 || flushY != 0 else { return }
-
-        carryScaledX = 0
-        carryScaledY = 0
-        ScrollSmoother.postScroll(
-            deltaX: Double(flushX) / momentumOutputScaleX,
-            deltaY: Double(flushY) / momentumOutputScaleY,
-            continuous: true,
-            intScaleX: momentumOutputScaleX,
-            intScaleY: momentumOutputScaleY,
-            flags: outputFlags
-        )
-    }
-
     private var launchScale: Double {
         // Keep release speed close to drag velocity for a stronger touch-like handoff.
-        0.44 + (0.86 * strengthResponse)
+        0.50 + (0.98 * strengthResponse)
     }
 
     private func decelerationRatePerMillisecond(forSpeed speed: Double) -> Double {
@@ -908,9 +914,9 @@ private final class MiddleDragMomentumAnimator {
         // Near zero: stronger braking to avoid a long "crawl".
         // High speed: gentler braking for a richer glide.
         let normalized = min(1.0, max(0.0, speed / decelerationReferenceSpeed))
-        let curve = pow(normalized, 0.58)
-        let lowSpeedRate = 0.9946 + (0.0024 * strengthResponse)
-        let highSpeedRate = 0.9971 + (0.0022 * strengthResponse)
+        let curve = pow(normalized, 0.52)
+        let lowSpeedRate = 0.9938 + (0.0018 * strengthResponse)
+        let highSpeedRate = 0.9975 + (0.0017 * strengthResponse)
         return lowSpeedRate + ((highSpeedRate - lowSpeedRate) * curve)
     }
 
@@ -918,15 +924,32 @@ private final class MiddleDragMomentumAnimator {
         pow(max(0.0, min(1.0, strengthLevel)), 0.7)
     }
 
+    private func momentumFrameShapingGain(now: TimeInterval, speed: Double) -> Double {
+        let elapsed = max(0.0, now - (startTime ?? now))
+        let easeInProgress = min(1.0, max(0.0, elapsed / easeInDurationSeconds))
+        let easeInGain = introMinGain + ((1.0 - introMinGain) * smoothstep(easeInProgress))
+
+        let normalizedSpeed = min(1.0, max(0.0, speed / max(launchSpeed, 0.000_1)))
+        let easeOutProgress = min(1.0, max(0.0, (easeOutStartNormalizedSpeed - normalizedSpeed) / easeOutStartNormalizedSpeed))
+        let easeOutGain = 1.0 - ((1.0 - tailMinGain) * smoothstep(easeOutProgress))
+
+        return easeInGain * easeOutGain
+    }
+
+    private func smoothstep(_ t: Double) -> Double {
+        t * t * (3.0 - (2.0 * t))
+    }
+
     private func stopLocked() {
-        flushCarryIfNeeded()
         velocityX = 0
         velocityY = 0
         carryScaledX = 0
         carryScaledY = 0
+        launchSpeed = 0
         quietTicks = 0
         outputFlags = []
         lastTickTime = nil
+        startTime = nil
         timer?.cancel()
         timer = nil
     }

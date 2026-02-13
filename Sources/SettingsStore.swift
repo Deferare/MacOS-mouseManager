@@ -6,11 +6,11 @@ final class SettingsStore: ObservableObject {
     private enum Defaults {
         static let showInAppSwitcher: Bool = false
         static let smoothScrollingEnabled: Bool = false
-        static let smoothnessLevel: Double = 0.68
+        static let smoothnessLevel: Double = 0.33
         static let reverseDirection: Bool = false
-        static let speedMultiplier: Double = 3.0
+        static let speedMultiplier: Double = 5.0
         static let middleDragScrollingEnabled: Bool = false
-        static let middleDragInertiaStrength: Double = 0.62
+        static let middleDragInertiaStrength: Double = 0.33
 
         static let middleClickAction: String = "Look Up & Quick Look"
         static let button4ClickAction: String = "Back"

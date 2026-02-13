@@ -32,11 +32,11 @@ struct PreviewHost<Content: View>: View {
         let store = SettingsStore()
         store.enabled = true
         store.smoothScrollingEnabled = true
-        store.smoothnessLevel = 0.68
+        store.smoothnessLevel = 0.33
         store.middleDragScrollingEnabled = true
-        store.middleDragInertiaStrength = 0.62
+        store.middleDragInertiaStrength = 0.33
         store.reverseDirection = false
-        store.speedMultiplier = 3.0
+        store.speedMultiplier = 5.0
         store.middleClickButtonAction = .lookUpQuickLook
         store.button4ButtonAction = .back
         store.button5ButtonAction = .forward
