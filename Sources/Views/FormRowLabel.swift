@@ -24,6 +24,10 @@ struct FormRowLabel: View {
                     .fixedSize(horizontal: false, vertical: true)
             }
         }
+        // Keep trailing controls (Toggle/Button/Picker) centered against multi-line labels.
+        .alignmentGuide(.firstTextBaseline) { dimensions in
+            dimensions[VerticalAlignment.center]
+        }
     }
 }
 
@@ -41,4 +45,3 @@ struct FormRowLabel: View {
     .formStyle(.grouped)
     .frame(width: 760, height: 520)
 }
-

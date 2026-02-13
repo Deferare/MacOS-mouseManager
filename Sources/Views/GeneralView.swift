@@ -32,7 +32,7 @@ struct GeneralView: View {
                 }
                 .toggleStyle(.switch)
 
-                HStack(alignment: .firstTextBaseline) {
+                HStack(alignment: .center) {
                     FormRowLabel(
                         "Quit App",
                         subtitle: "Mouse Manager will stop until you launch it again."
@@ -45,7 +45,7 @@ struct GeneralView: View {
             }
 
             Section("Permissions") {
-                HStack(alignment: .firstTextBaseline) {
+                HStack(alignment: .center) {
                     FormRowLabel(
                         "Accessibility",
                         subtitle: "To modify mouse/scroll behavior, macOS requires Accessibility permission."
