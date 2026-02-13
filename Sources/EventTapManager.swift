@@ -69,8 +69,6 @@ final class EventTapManager: ObservableObject {
             let previousStatus = accessibilityStatus
             updateAccessibilityStatus()
             handleAccessibilityTransition(previousStatus: previousStatus, settings: settings)
-        } else {
-            tapContext?.setInterceptionEnabled(snapshot.enabled && accessibilityStatus == .granted)
         }
         updateTrustPollingState()
 

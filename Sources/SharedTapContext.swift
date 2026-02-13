@@ -82,11 +82,6 @@ final class SharedTapContext {
     }
 
     func handle(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
-        if type == .mouseMoved && !middleDrag.isActive {
-            // mouseMoved is very high-frequency. Fast-path pass-through when drag mode is inactive.
-            return Unmanaged.passUnretained(event)
-        }
-
         if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
             lock.lock()
             let tap = eventTap
@@ -102,17 +97,22 @@ final class SharedTapContext {
             return Unmanaged.passUnretained(event)
         }
 
+        if type == .mouseMoved && !middleDrag.isActive {
+            // mouseMoved is very high-frequency. Fast-path pass-through when drag mode is inactive.
+            return Unmanaged.passUnretained(event)
+        }
+
+        // Synthetic events do not require settings/lock inspection.
+        let userData = event.getIntegerValueField(.eventSourceUserData)
+        if userData == ScrollSmoother.syntheticUserDataTag || userData == MiddleDragScrollState.syntheticUserDataTag {
+            return Unmanaged.passUnretained(event)
+        }
+
         lock.lock()
         let currentSettings = settings
         let enabled = interceptionEnabled
         lock.unlock()
         if !enabled {
-            return Unmanaged.passUnretained(event)
-        }
-
-        // Avoid re-processing events we synthesize ourselves.
-        let userData = event.getIntegerValueField(.eventSourceUserData)
-        if userData == ScrollSmoother.syntheticUserDataTag || userData == MiddleDragScrollState.syntheticUserDataTag {
             return Unmanaged.passUnretained(event)
         }
 
