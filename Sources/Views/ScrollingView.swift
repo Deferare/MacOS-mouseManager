@@ -26,7 +26,7 @@ struct ScrollingView: View {
                 }
                 Toggle("Reverse Direction", isOn: $settings.reverseDirection)
             } header: {
-                Label("Wheel", systemImage: "magicmouse")
+                Text("Wheel")
             }
 
             Section {
@@ -40,7 +40,7 @@ struct ScrollingView: View {
                     String(format: "%.2f×", value)
                 }
             } header: {
-                Label("Speed", systemImage: "gauge.with.dots.needle.bottom.50percent")
+                Text("Speed")
             }
         }
     }

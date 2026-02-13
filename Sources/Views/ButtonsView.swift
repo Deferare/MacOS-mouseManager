@@ -55,14 +55,14 @@ struct ButtonsView: View {
                     "\(Int((value * 100).rounded()))%"
                 }
             } header: {
-                Label("Middle Button", systemImage: "computermouse.fill")
+                Text("Middle Button")
             }
 
             ForEach(additionalButtonSections) { section in
                 Section {
                     actionPicker(actionBinding(section.actionKeyPath))
                 } header: {
-                    Label(section.title, systemImage: "button.programmable")
+                    Text(section.title)
                 }
             }
         }
