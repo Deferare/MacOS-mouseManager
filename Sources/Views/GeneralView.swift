@@ -1,3 +1,4 @@
+import AppKit
 import SwiftUI
 
 struct GeneralView: View {
@@ -19,6 +20,27 @@ struct GeneralView: View {
 
                     // Prompt for Accessibility permission right away (macOS will show the system dialog).
                     tapManager.requestAccessibilityPermission()
+                }
+            }
+
+            Section("App") {
+                Toggle(isOn: $settings.showInAppSwitcher) {
+                    FormRowLabel(
+                        "Show in Cmd+Tab and Dock",
+                        subtitle: "Turn off to run as a background app (hidden from Cmd+Tab and Dock), like the current behavior."
+                    )
+                }
+                .toggleStyle(.switch)
+
+                HStack(alignment: .firstTextBaseline) {
+                    FormRowLabel(
+                        "Quit App",
+                        subtitle: "Mouse Manager will stop until you launch it again."
+                    )
+                    Spacer()
+                    Button("Quit Now") {
+                        NSApplication.shared.terminate(nil)
+                    }
                 }
             }
 

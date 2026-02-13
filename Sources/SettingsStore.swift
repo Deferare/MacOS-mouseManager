@@ -4,6 +4,7 @@ import SwiftUI
 @MainActor
 final class SettingsStore: ObservableObject {
     private enum Defaults {
+        static let showInAppSwitcher: Bool = false
         static let smoothScrollingEnabled: Bool = false
         static let smoothnessLevel: Double = 0.68
         static let reverseDirection: Bool = false
@@ -44,6 +45,7 @@ final class SettingsStore: ObservableObject {
 
     // General
     @AppStorage("enabled") var enabled: Bool = false { didSet { notifyIfChanged(oldValue, enabled) } }
+    @AppStorage("showInAppSwitcher") var showInAppSwitcher: Bool = Defaults.showInAppSwitcher { didSet { notifyIfChanged(oldValue, showInAppSwitcher) } }
     @AppStorage("didInitializeDefaults") var didInitializeDefaults: Bool = false { didSet { notifyIfChanged(oldValue, didInitializeDefaults) } }
 
     // Scrolling
