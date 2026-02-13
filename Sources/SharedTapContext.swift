@@ -45,6 +45,9 @@ final class SharedTapContext {
         settings = newSettings
         lock.unlock()
 
+        let smoothnessChanged = previous.smoothnessLevel != newSettings.smoothnessLevel
+        let inertiaStrengthChanged = previous.middleDragInertiaStrength != newSettings.middleDragInertiaStrength
+
         // Prevent stale smoothing momentum from fighting new direction/mode settings.
         if previous.reverseDirection != newSettings.reverseDirection ||
             previous.smoothScrollingEnabled != newSettings.smoothScrollingEnabled {
@@ -54,8 +57,12 @@ final class SharedTapContext {
             previous.middleDragScrollingEnabled != newSettings.middleDragScrollingEnabled {
             middleDragMomentum.cancel()
         }
-        middleDragMomentum.updateStrength(level: newSettings.middleDragInertiaStrength)
-        scrollSmoother.updateSmoothness(level: newSettings.smoothnessLevel)
+        if inertiaStrengthChanged {
+            middleDragMomentum.updateStrength(level: newSettings.middleDragInertiaStrength)
+        }
+        if smoothnessChanged {
+            scrollSmoother.updateSmoothness(level: newSettings.smoothnessLevel)
+        }
     }
 
     func setInterceptionEnabled(_ enabled: Bool) {
@@ -75,6 +82,11 @@ final class SharedTapContext {
     }
 
     func handle(proxy: CGEventTapProxy, type: CGEventType, event: CGEvent) -> Unmanaged<CGEvent>? {
+        if type == .mouseMoved && !middleDrag.isActive {
+            // mouseMoved is very high-frequency. Fast-path pass-through when drag mode is inactive.
+            return Unmanaged.passUnretained(event)
+        }
+
         if type == .tapDisabledByTimeout || type == .tapDisabledByUserInput {
             lock.lock()
             let tap = eventTap

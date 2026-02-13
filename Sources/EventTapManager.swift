@@ -57,8 +57,10 @@ final class EventTapManager: ObservableObject {
 
     func apply(settings: SettingsStore) {
         settingsStore = settings
-        let previousEnabled = lastSettingsSnapshot?.enabled
         let snapshot = settings.snapshot
+        let previousSnapshot = lastSettingsSnapshot
+        let previousEnabled = previousSnapshot?.enabled
+        let settingsChanged = previousSnapshot != snapshot
         lastSettingsSnapshot = snapshot
 
         // Avoid AX trust checks for every slider tick while enabled. Refresh on first
@@ -82,7 +84,7 @@ final class EventTapManager: ObservableObject {
             return
         }
 
-        if let tapContext {
+        if settingsChanged, let tapContext {
             tapContext.updateSettings(snapshot)
         }
         if !startIfNeeded(settings: snapshot) {
