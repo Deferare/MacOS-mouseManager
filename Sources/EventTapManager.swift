@@ -87,11 +87,7 @@ final class EventTapManager: ObservableObject {
         }
         if !startIfNeeded(settings: snapshot) {
             // If event tap creation fails, permission state is effectively unusable.
-            accessibilityStatus = .denied
-            if settings.enabled {
-                settings.enabled = false
-                lastSettingsSnapshot = settings.snapshot
-            }
+            handleTapStartFailure(using: settings)
             updateTrustPollingState()
         }
     }
@@ -112,16 +108,24 @@ final class EventTapManager: ObservableObject {
         accessibilityStatus = AXIsProcessTrusted() ? .granted : .denied
     }
 
+    private func disableSettingsIfEnabled(_ settings: SettingsStore) {
+        guard settings.enabled else { return }
+        settings.enabled = false
+        lastSettingsSnapshot = settings.snapshot
+    }
+
+    private func handleTapStartFailure(using settings: SettingsStore) {
+        accessibilityStatus = .denied
+        disableSettingsIfEnabled(settings)
+    }
+
     private func handleAccessibilityTransition(previousStatus: AccessibilityStatus, settings: SettingsStore) {
         let isGranted = (accessibilityStatus == .granted)
         tapContext?.setInterceptionEnabled(settings.enabled && isGranted)
 
         if previousStatus == .granted, !isGranted {
             stop()
-            if settings.enabled {
-                settings.enabled = false
-                lastSettingsSnapshot = settings.snapshot
-            }
+            disableSettingsIfEnabled(settings)
             return
         }
 
@@ -185,11 +189,7 @@ final class EventTapManager: ObservableObject {
                 tapContext.updateSettings(snapshot)
             }
             if !startIfNeeded(settings: snapshot) {
-                accessibilityStatus = .denied
-                if settingsStore.enabled {
-                    settingsStore.enabled = false
-                    lastSettingsSnapshot = settingsStore.snapshot
-                }
+                handleTapStartFailure(using: settingsStore)
             }
         }
         updateTrustPollingState()
