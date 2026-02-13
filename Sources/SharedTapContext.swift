@@ -1,6 +1,7 @@
 import Cocoa
 import CoreVideo
 import Foundation
+import os.lock
 
 private enum SyntheticEventSource {
     static let hidSystemState: CGEventSource? = CGEventSource(stateID: .hidSystemState)
@@ -19,7 +20,7 @@ final class SharedTapContext {
     private static let middleDragPrecisionDampingSpan: Double = 0.10
     private static let middleDragPrecisionKnee: Double = 1.6
 
-    private let lock = NSLock()
+    private let lock = OSAllocatedUnfairLock()
     private var settings: SettingsSnapshot
     private let scrollSmoother = ScrollSmoother()
     private let middleDrag = MiddleDragScrollState()
@@ -409,7 +410,7 @@ final class SharedTapContext {
 private final class ScrollSmoother {
     static let syntheticUserDataTag: Int64 = 0x4D4D4653 // "MMFS"
 
-    private let queue = DispatchQueue(label: "mousemanager.scrollsmoother")
+    private let queue = DispatchQueue(label: "mousemanager.scrollsmoother", qos: .userInteractive)
     private var displayLink: CVDisplayLink?
     private var isRunning: Bool = false
 
@@ -781,7 +782,7 @@ private final class MiddleDragScrollState {
 }
 
 private final class MiddleDragMomentumAnimator {
-    private let queue = DispatchQueue(label: "mousemanager.middledragmomentum")
+    private let queue = DispatchQueue(label: "mousemanager.middledragmomentum", qos: .userInteractive)
     private var timer: DispatchSourceTimer?
     private var velocityX: Double = 0
     private var velocityY: Double = 0
