@@ -17,7 +17,7 @@ struct FormRowLabel: View {
 
             if let subtitle {
                 Text(subtitle)
-                    .font(.callout)
+                    .font(.caption)
                     .foregroundStyle(.secondary)
                     .multilineTextAlignment(.leading)
                     .frame(maxWidth: .infinity, alignment: .leading)

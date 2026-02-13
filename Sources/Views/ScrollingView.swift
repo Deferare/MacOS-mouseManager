@@ -6,7 +6,7 @@ struct ScrollingView: View {
 
     var body: some View {
         Form {
-            Section("Wheel") {
+            Section {
                 Toggle(isOn: $settings.smoothScrollingEnabled) {
                     FormRowLabel(
                         "Smooth Scrolling",
@@ -25,9 +25,11 @@ struct ScrollingView: View {
                     "\(Int((value * 100).rounded()))%"
                 }
                 Toggle("Reverse Direction", isOn: $settings.reverseDirection)
+            } header: {
+                Label("Wheel", systemImage: "magicmouse")
             }
 
-            Section("Speed") {
+            Section {
                 FormSliderRow(
                     "Multiplier",
                     subtitle: "Applies to both vertical and horizontal scroll.",
@@ -37,6 +39,8 @@ struct ScrollingView: View {
                 ) { value in
                     String(format: "%.2f×", value)
                 }
+            } header: {
+                Label("Speed", systemImage: "gauge.with.dots.needle.bottom.50percent")
             }
         }
     }

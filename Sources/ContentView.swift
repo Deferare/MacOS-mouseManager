@@ -10,6 +10,7 @@ struct ContentView: View {
         NavigationSplitView {
             List(AppSection.allCases, selection: $selection) { section in
                 Label(section.title, systemImage: section.systemImage)
+                    .symbolRenderingMode(.hierarchical)
                     .tag(section)
             }
             .listStyle(.sidebar)
