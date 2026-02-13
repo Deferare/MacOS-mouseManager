@@ -3,6 +3,17 @@ import SwiftUI
 struct ButtonsView: View {
     @EnvironmentObject private var settings: SettingsStore
 
+    private struct AdditionalButtonSection: Identifiable {
+        let title: String
+        let actionKeyPath: ReferenceWritableKeyPath<SettingsStore, ButtonAction>
+        var id: String { title }
+    }
+
+    private let additionalButtonSections: [AdditionalButtonSection] = [
+        AdditionalButtonSection(title: "Button 4", actionKeyPath: \.button4ButtonAction),
+        AdditionalButtonSection(title: "Button 5", actionKeyPath: \.button5ButtonAction)
+    ]
+
     private let actions = ButtonAction.allCases
 
     private func actionBinding(_ keyPath: ReferenceWritableKeyPath<SettingsStore, ButtonAction>) -> Binding<ButtonAction> {
@@ -12,15 +23,19 @@ struct ButtonsView: View {
         )
     }
 
+    private func actionPicker(_ selection: Binding<ButtonAction>) -> some View {
+        Picker("Click", selection: selection) {
+            ForEach(actions, id: \.self) { action in
+                Text(action.rawValue)
+                    .tag(action)
+            }
+        }
+    }
+
     var body: some View {
         Form {
             Section("Middle Button") {
-                Picker("Click", selection: actionBinding(\.middleClickButtonAction)) {
-                    ForEach(actions, id: \.self) { action in
-                        Text(action.rawValue)
-                            .tag(action)
-                    }
-                }
+                actionPicker(actionBinding(\.middleClickButtonAction))
 
                 Toggle(isOn: $settings.middleDragScrollingEnabled) {
                     FormRowLabel(
@@ -41,21 +56,9 @@ struct ButtonsView: View {
                 }
             }
 
-            Section("Button 4") {
-                Picker("Click", selection: actionBinding(\.button4ButtonAction)) {
-                    ForEach(actions, id: \.self) { action in
-                        Text(action.rawValue)
-                            .tag(action)
-                    }
-                }
-            }
-
-            Section("Button 5") {
-                Picker("Click", selection: actionBinding(\.button5ButtonAction)) {
-                    ForEach(actions, id: \.self) { action in
-                        Text(action.rawValue)
-                            .tag(action)
-                    }
+            ForEach(additionalButtonSections) { section in
+                Section(section.title) {
+                    actionPicker(actionBinding(section.actionKeyPath))
                 }
             }
         }

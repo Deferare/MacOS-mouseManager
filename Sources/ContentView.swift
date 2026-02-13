@@ -16,14 +16,7 @@ struct ContentView: View {
             .navigationSplitViewColumnWidth(min: 180, ideal: 210, max: 260)
         } detail: {
             NavigationStack {
-                Group {
-                    switch selection {
-                    case .general: GeneralView()
-                    case .buttons: ButtonsView()
-                    case .scrolling: ScrollingView()
-                    case .about: AboutView()
-                    }
-                }
+                selectedSectionView
                 .navigationTitle(selection.title)
             }
             .toolbar {
@@ -33,28 +26,9 @@ struct ContentView: View {
                             settings.applyDefaultSettings()
                         }
 
-                        Divider()
-
-                        switch selection {
-                        case .general:
-                            Button("Request Accessibility") {
-                                tapManager.requestAccessibilityPermission(forceOpenSettings: true)
-                            }
-
-                        case .buttons:
-                            Button("Restore Button Defaults") {
-                                settings.restoreButtonsDefaults()
-                            }
-                            Button("Options…") {}
-                                .disabled(true)
-
-                        case .scrolling:
-                            Button("Restore Scrolling Defaults") {
-                                settings.restoreScrollingDefaults()
-                            }
-
-                        case .about:
-                            EmptyView()
+                        if hasSectionActions {
+                            Divider()
+                            sectionActions
                         }
                     } label: {
                         Label("Actions", systemImage: "ellipsis.circle")
@@ -63,18 +37,58 @@ struct ContentView: View {
             }
         }
         .formStyle(.grouped)
-        .onAppear {
-            guard !PreviewEnvironment.isPreview else { return }
-            tapManager.apply(settings: settings)
-        }
+        .onAppear(perform: syncTapManagerIfNeeded)
         .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
-            guard !PreviewEnvironment.isPreview else { return }
-            tapManager.apply(settings: settings)
+            syncTapManagerIfNeeded()
         }
         .onChange(of: settings.snapshot) { _ in
-            guard !PreviewEnvironment.isPreview else { return }
-            tapManager.apply(settings: settings)
+            syncTapManagerIfNeeded()
         }
+    }
+
+    @ViewBuilder
+    private var selectedSectionView: some View {
+        switch selection {
+        case .general:
+            GeneralView()
+        case .buttons:
+            ButtonsView()
+        case .scrolling:
+            ScrollingView()
+        case .about:
+            AboutView()
+        }
+    }
+
+    private var hasSectionActions: Bool {
+        selection != .about
+    }
+
+    @ViewBuilder
+    private var sectionActions: some View {
+        switch selection {
+        case .general:
+            Button("Request Accessibility") {
+                tapManager.requestAccessibilityPermission(forceOpenSettings: true)
+            }
+        case .buttons:
+            Button("Restore Button Defaults") {
+                settings.restoreButtonsDefaults()
+            }
+            Button("Options…") {}
+                .disabled(true)
+        case .scrolling:
+            Button("Restore Scrolling Defaults") {
+                settings.restoreScrollingDefaults()
+            }
+        case .about:
+            EmptyView()
+        }
+    }
+
+    private func syncTapManagerIfNeeded() {
+        guard !PreviewEnvironment.isPreview else { return }
+        tapManager.apply(settings: settings)
     }
 }
 

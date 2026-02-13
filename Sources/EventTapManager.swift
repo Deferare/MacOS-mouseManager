@@ -22,16 +22,31 @@ final class EventTapManager: ObservableObject {
 
     private static let trustPollInterval: TimeInterval = 0.5
     private static let permissionGrantPollTimeout: TimeInterval = 45.0
-    private static let eventMask: CGEventMask =
-        (1 << CGEventType.scrollWheel.rawValue) |
-        (1 << CGEventType.mouseMoved.rawValue) |
-        (1 << CGEventType.otherMouseDown.rawValue) |
-        (1 << CGEventType.otherMouseUp.rawValue) |
-        (1 << CGEventType.otherMouseDragged.rawValue)
+    private static func eventMask(for settings: SettingsSnapshot) -> CGEventMask {
+        var mask: CGEventMask =
+            (1 << CGEventType.scrollWheel.rawValue)
+
+        if settings.middleDragScrollingEnabled || settings.hasButtonActions {
+            mask |=
+                (1 << CGEventType.otherMouseDown.rawValue) |
+                (1 << CGEventType.otherMouseUp.rawValue)
+        }
+
+        if settings.middleDragScrollingEnabled {
+            // Some devices do not emit otherMouseDragged while the middle button is held,
+            // so we also listen for mouseMoved to keep drag scrolling responsive.
+            mask |=
+                (1 << CGEventType.otherMouseDragged.rawValue) |
+                (1 << CGEventType.mouseMoved.rawValue)
+        }
+
+        return mask
+    }
 
     private let tapRunLoopHost = EventTapRunLoopHost()
     private var eventTap: CFMachPort?
     private var runLoopSource: CFRunLoopSource?
+    private var activeEventMask: CGEventMask?
     private var tapContext: SharedTapContext?
     private var lastSettingsSnapshot: SettingsSnapshot?
     private var trustPollTimer: Timer?
@@ -57,43 +72,20 @@ final class EventTapManager: ObservableObject {
 
     func apply(settings: SettingsStore) {
         settingsStore = settings
+        defer { updateTrustPollingState() }
+
         let snapshot = settings.snapshot
         let previousSnapshot = lastSettingsSnapshot
         let previousEnabled = previousSnapshot?.enabled
         let settingsChanged = previousSnapshot != snapshot
         lastSettingsSnapshot = snapshot
 
-        // Avoid AX trust checks for every slider tick while enabled. Refresh on first
-        // launch, enable-state changes, and whenever interception is currently disabled.
-        if accessibilityStatus == .unknown || previousEnabled != snapshot.enabled || !snapshot.enabled {
-            let previousStatus = accessibilityStatus
-            updateAccessibilityStatus()
-            handleAccessibilityTransition(previousStatus: previousStatus, settings: settings)
-        }
-        updateTrustPollingState()
-
-        guard snapshot.enabled else {
-            stop()
-            return
-        }
-
-        guard accessibilityStatus == .granted else {
-            stop()
-            return
-        }
-
-        if settingsChanged, let tapContext {
-            tapContext.updateSettings(snapshot)
-        }
-        if !startIfNeeded(settings: snapshot) {
-            // If event tap creation fails, permission state is effectively unusable.
-            accessibilityStatus = .denied
-            if settings.enabled {
-                settings.enabled = false
-                lastSettingsSnapshot = settings.snapshot
-            }
-            updateTrustPollingState()
-        }
+        refreshAccessibilityStatusIfNeeded(
+            previousEnabled: previousEnabled,
+            snapshot: snapshot,
+            settings: settings
+        )
+        reconcileTapState(using: settings, snapshot: snapshot, settingsChanged: settingsChanged)
     }
 
     func requestAccessibilityPermission(forceOpenSettings: Bool = false) {
@@ -112,16 +104,24 @@ final class EventTapManager: ObservableObject {
         accessibilityStatus = AXIsProcessTrusted() ? .granted : .denied
     }
 
+    private func disableSettingsIfEnabled(_ settings: SettingsStore) {
+        guard settings.enabled else { return }
+        settings.enabled = false
+        lastSettingsSnapshot = settings.snapshot
+    }
+
+    private func handleTapStartFailure(using settings: SettingsStore) {
+        accessibilityStatus = .denied
+        disableSettingsIfEnabled(settings)
+    }
+
     private func handleAccessibilityTransition(previousStatus: AccessibilityStatus, settings: SettingsStore) {
         let isGranted = (accessibilityStatus == .granted)
         tapContext?.setInterceptionEnabled(settings.enabled && isGranted)
 
         if previousStatus == .granted, !isGranted {
             stop()
-            if settings.enabled {
-                settings.enabled = false
-                lastSettingsSnapshot = settings.snapshot
-            }
+            disableSettingsIfEnabled(settings)
             return
         }
 
@@ -174,25 +174,20 @@ final class EventTapManager: ObservableObject {
             stopTrustPolling()
             return
         }
+        defer { updateTrustPollingState() }
 
         let previousStatus = accessibilityStatus
         updateAccessibilityStatus()
-        let isGranted = (accessibilityStatus == .granted)
         handleAccessibilityTransition(previousStatus: previousStatus, settings: settingsStore)
 
-        if previousStatus != .granted, isGranted, let snapshot = lastSettingsSnapshot, snapshot.enabled {
-            if let tapContext {
-                tapContext.updateSettings(snapshot)
-            }
-            if !startIfNeeded(settings: snapshot) {
-                accessibilityStatus = .denied
-                if settingsStore.enabled {
-                    settingsStore.enabled = false
-                    lastSettingsSnapshot = settingsStore.snapshot
-                }
-            }
+        if let snapshot = lastSettingsSnapshot {
+            let shouldRefreshContext = previousStatus != accessibilityStatus
+            reconcileTapState(
+                using: settingsStore,
+                snapshot: snapshot,
+                settingsChanged: shouldRefreshContext
+            )
         }
-        updateTrustPollingState()
     }
 
     deinit {
@@ -212,7 +207,56 @@ final class EventTapManager: ObservableObject {
         apply(settings: settingsStore)
     }
 
-    private func startIfNeeded(settings: SettingsSnapshot) -> Bool {
+    private func refreshAccessibilityStatusIfNeeded(
+        previousEnabled: Bool?,
+        snapshot: SettingsSnapshot,
+        settings: SettingsStore
+    ) {
+        // Avoid AX trust checks for every slider tick while enabled. Refresh on first
+        // launch, enable-state changes, and whenever interception is currently disabled.
+        guard accessibilityStatus == .unknown || previousEnabled != snapshot.enabled || !snapshot.enabled else {
+            return
+        }
+        let previousStatus = accessibilityStatus
+        updateAccessibilityStatus()
+        handleAccessibilityTransition(previousStatus: previousStatus, settings: settings)
+    }
+
+    private func reconcileTapState(
+        using settings: SettingsStore,
+        snapshot: SettingsSnapshot,
+        settingsChanged: Bool
+    ) {
+        guard snapshot.enabled else {
+            stop()
+            return
+        }
+
+        guard accessibilityStatus == .granted else {
+            stop()
+            return
+        }
+
+        let desiredEventMask = Self.eventMask(for: snapshot)
+        if shouldRecreateTap(for: desiredEventMask) {
+            // Avoid paying callback cost for high-frequency classes when not needed.
+            stop()
+        }
+
+        if settingsChanged, let tapContext {
+            tapContext.updateSettings(snapshot)
+        }
+        if !startIfNeeded(settings: snapshot, eventMask: desiredEventMask) {
+            // If event tap creation fails, permission state is effectively unusable.
+            handleTapStartFailure(using: settings)
+        }
+    }
+
+    private func shouldRecreateTap(for desiredEventMask: CGEventMask) -> Bool {
+        eventTap != nil && activeEventMask != desiredEventMask
+    }
+
+    private func startIfNeeded(settings: SettingsSnapshot, eventMask: CGEventMask) -> Bool {
         if eventTap != nil { return true }
 
         let context = SharedTapContext(settings: settings)
@@ -230,16 +274,18 @@ final class EventTapManager: ObservableObject {
             tap: .cgSessionEventTap,
             place: .headInsertEventTap,
             options: .defaultTap,
-            eventsOfInterest: Self.eventMask,
+            eventsOfInterest: eventMask,
             callback: callback,
             userInfo: refcon
         ) else {
             tapContext = nil
+            activeEventMask = nil
             return false
         }
         context.attachEventTap(tap)
 
         eventTap = tap
+        activeEventMask = eventMask
         runLoopSource = CFMachPortCreateRunLoopSource(kCFAllocatorDefault, tap, 0)
         if let runLoopSource {
             tapRunLoopHost.addSource(runLoopSource)
@@ -267,6 +313,7 @@ final class EventTapManager: ObservableObject {
         }
         runLoopSource = nil
         eventTap = nil
+        activeEventMask = nil
         tapContext = nil
     }
 }

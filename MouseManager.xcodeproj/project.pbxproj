@@ -23,6 +23,10 @@
 		1F4B70DB2D6C111100A1B2C3 /* EventTapRunLoopHost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */; };
 		1F4B70DD2D6C111100A1B2C3 /* SharedTapContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */; };
 		1F4B70E02D6C222200A1B2C3 /* FormSliderRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70DF2D6C222200A1B2C3 /* FormSliderRow.swift */; };
+		1F4B70E22D6C333300A1B2C3 /* SyntheticEventSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70E12D6C333300A1B2C3 /* SyntheticEventSource.swift */; };
+		1F4B70E42D6C333300A1B2C3 /* ScrollSmoother.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70E32D6C333300A1B2C3 /* ScrollSmoother.swift */; };
+		1F4B70E62D6C333300A1B2C3 /* MiddleDragScrollState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70E52D6C333300A1B2C3 /* MiddleDragScrollState.swift */; };
+		1F4B70E82D6C333300A1B2C3 /* MiddleDragMomentumAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4B70E72D6C333300A1B2C3 /* MiddleDragMomentumAnimator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +48,10 @@
 		1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EventTapRunLoopHost.swift; path = Sources/EventTapRunLoopHost.swift; sourceTree = SOURCE_ROOT; };
 		1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SharedTapContext.swift; path = Sources/SharedTapContext.swift; sourceTree = SOURCE_ROOT; };
 		1F4B70DF2D6C222200A1B2C3 /* FormSliderRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FormSliderRow.swift; path = Sources/Views/FormSliderRow.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70E12D6C333300A1B2C3 /* SyntheticEventSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SyntheticEventSource.swift; path = Sources/SyntheticEventSource.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70E32D6C333300A1B2C3 /* ScrollSmoother.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ScrollSmoother.swift; path = Sources/ScrollSmoother.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70E52D6C333300A1B2C3 /* MiddleDragScrollState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MiddleDragScrollState.swift; path = Sources/MiddleDragScrollState.swift; sourceTree = SOURCE_ROOT; };
+		1F4B70E72D6C333300A1B2C3 /* MiddleDragMomentumAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MiddleDragMomentumAnimator.swift; path = Sources/MiddleDragMomentumAnimator.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +100,10 @@
 				1F4B70A72D6AB0AF00A1B2C3 /* EventTapManager.swift */,
 				1F4B70DA2D6C111100A1B2C3 /* EventTapRunLoopHost.swift */,
 				1F4B70DC2D6C111100A1B2C3 /* SharedTapContext.swift */,
+				1F4B70E12D6C333300A1B2C3 /* SyntheticEventSource.swift */,
+				1F4B70E32D6C333300A1B2C3 /* ScrollSmoother.swift */,
+				1F4B70E52D6C333300A1B2C3 /* MiddleDragScrollState.swift */,
+				1F4B70E72D6C333300A1B2C3 /* MiddleDragMomentumAnimator.swift */,
 				1F4B70C12D6AC00100A1B2C3 /* PreviewSupport.swift */,
 				1F4B70B22D6AB0B700A1B2C3 /* Views */,
 			);
@@ -187,6 +199,10 @@
 				1F4B70A82D6AB0AF00A1B2C3 /* EventTapManager.swift in Sources */,
 				1F4B70DB2D6C111100A1B2C3 /* EventTapRunLoopHost.swift in Sources */,
 				1F4B70DD2D6C111100A1B2C3 /* SharedTapContext.swift in Sources */,
+				1F4B70E22D6C333300A1B2C3 /* SyntheticEventSource.swift in Sources */,
+				1F4B70E42D6C333300A1B2C3 /* ScrollSmoother.swift in Sources */,
+				1F4B70E62D6C333300A1B2C3 /* MiddleDragScrollState.swift in Sources */,
+				1F4B70E82D6C333300A1B2C3 /* MiddleDragMomentumAnimator.swift in Sources */,
 				1F4B70C22D6AC00100A1B2C3 /* PreviewSupport.swift in Sources */,
 				1F4B70AB2D6AB0B700A1B2C3 /* GeneralView.swift in Sources */,
 				1F4B70AD2D6AB0B700A1B2C3 /* ButtonsView.swift in Sources */,
@@ -315,7 +331,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 23N5J9ACJ7;
+				DEVELOPMENT_TEAM = DYMB4UT7G5;
 				INFOPLIST_FILE = MouseManager/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -339,7 +355,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "";
-				DEVELOPMENT_TEAM = 23N5J9ACJ7;
+				DEVELOPMENT_TEAM = DYMB4UT7G5;
 				INFOPLIST_FILE = MouseManager/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.productivity";
 				LD_RUNPATH_SEARCH_PATHS = (
