@@ -1,5 +1,4 @@
 import Cocoa
-import CoreVideo
 import Foundation
 import os.lock
 
@@ -177,6 +176,11 @@ final class SharedTapContext {
         let adaptiveGain = adaptiveWheelGain(deltaX: deltaX, deltaY: deltaY)
         deltaY *= settings.speedMultiplier * adaptiveGain
         deltaX *= settings.speedMultiplier * adaptiveGain
+
+        // Guard against rare driver/device anomalies that may yield non-finite deltas.
+        if !deltaY.isFinite || !deltaX.isFinite {
+            return Unmanaged.passUnretained(event)
+        }
 
         // Never swallow an event when the effective delta is zero-like.
         if abs(deltaY) < Self.wheelDeltaEpsilon && abs(deltaX) < Self.wheelDeltaEpsilon {
@@ -411,11 +415,12 @@ private final class ScrollSmoother {
     static let syntheticUserDataTag: Int64 = 0x4D4D4653 // "MMFS"
 
     private let queue = DispatchQueue(label: "mousemanager.scrollsmoother", qos: .userInteractive)
-    private var displayLink: CVDisplayLink?
+    private var timer: DispatchSourceTimer?
     private var isRunning: Bool = false
+    private var lastTickTime: TimeInterval?
 
-    // Remaining delta that we will distribute across several display frames.
-    // This gives "touch-like" smoothness but stops quickly once input stops.
+    // Remaining delta that we will distribute across several high-frequency timer frames.
+    // This keeps a touch-like response while avoiding CVDisplayLink lifecycle edge cases.
     private var remainingX: Double = 0
     private var remainingY: Double = 0
     // Preserve sub-integer wheel movement so small deltas are not lost.
@@ -426,16 +431,10 @@ private final class ScrollSmoother {
     private var tuning = Tuning.defaultValue
     private var outputFlags: CGEventFlags = []
     private var smoothnessLevel: Double = 0.33
-    private var nominalFrameDurationSeconds: Double = 1.0 / 120.0
-    private var cachedFrameAlpha: Double = 0
     private var quietTailTicks: Int = 0
 
     private let quietTailTicksToStop: Int = 8
     private let carryQuietThreshold: Double = 0.45
-
-    init() {
-        updateCachedFrameAlpha()
-    }
 
     private func clearBufferedMotion() {
         remainingX = 0
@@ -479,17 +478,21 @@ private final class ScrollSmoother {
             guard self.smoothnessLevel != level else { return }
             self.smoothnessLevel = level
             self.tuning = Tuning.from(level: level)
-            self.updateCachedFrameAlpha()
         }
     }
 
     func enqueueImpulse(deltaX: Double, deltaY: Double, continuous: Bool, smoothnessLevel: Double, flags: CGEventFlags) {
         queue.async {
+            guard deltaX.isFinite, deltaY.isFinite else {
+                self.clearBufferedMotion()
+                self.stopIfNeeded()
+                return
+            }
+
             self.continuous = continuous
             if self.smoothnessLevel != smoothnessLevel {
                 self.smoothnessLevel = smoothnessLevel
                 self.tuning = Tuning.from(level: smoothnessLevel)
-                self.updateCachedFrameAlpha()
             }
             self.outputFlags = flags
 
@@ -505,52 +508,26 @@ private final class ScrollSmoother {
     private func startIfNeeded() {
         if isRunning { return }
         isRunning = true
+        lastTickTime = nil
 
-        if displayLink == nil {
-            var link: CVDisplayLink?
-            CVDisplayLinkCreateWithActiveCGDisplays(&link)
-            displayLink = link
-
-            if let displayLink {
-                CVDisplayLinkSetOutputCallback(displayLink, { (_, _, _, _, _, userInfo) -> CVReturn in
-                    guard let userInfo else { return kCVReturnSuccess }
-                    let unmanaged = Unmanaged<ScrollSmoother>.fromOpaque(userInfo)
-                    let smoother = unmanaged.takeUnretainedValue()
-                    smoother.frameTick()
-                    return kCVReturnSuccess
-                }, Unmanaged.passUnretained(self).toOpaque())
-
-                let nominal = CVDisplayLinkGetNominalOutputVideoRefreshPeriod(displayLink)
-                if nominal.timeValue > 0 {
-                    nominalFrameDurationSeconds = Double(nominal.timeValue) / Double(nominal.timeScale)
-                } else {
-                    nominalFrameDurationSeconds = 1.0 / 120.0
-                }
-                updateCachedFrameAlpha()
-            }
+        let newTimer = DispatchSource.makeTimerSource(queue: queue)
+        newTimer.schedule(deadline: .now(), repeating: .milliseconds(8), leeway: .milliseconds(2))
+        newTimer.setEventHandler { [weak self] in
+            self?.tick()
         }
-
-        if let displayLink {
-            CVDisplayLinkStart(displayLink)
-        }
+        timer = newTimer
+        newTimer.resume()
     }
 
     private func stopIfNeeded() {
         guard isRunning else { return }
         isRunning = false
-        if let displayLink {
-            CVDisplayLinkStop(displayLink)
-        }
+        lastTickTime = nil
+        timer?.cancel()
+        timer = nil
     }
 
-    private func frameTick() {
-        // CVDisplayLink callback thread -> hop onto our queue.
-        queue.async { [weak self] in
-            self?.tick(dt: nil)
-        }
-    }
-
-    private func tick(dt: Double?) {
+    private func tick() {
         // If Command is held (e.g. App Switcher), stop synthetic scroll immediately.
         if CGEventSource.flagsState(.hidSystemState).contains(.maskCommand) {
             clearBufferedMotion()
@@ -558,25 +535,18 @@ private final class ScrollSmoother {
             return
         }
 
-        // dt: we can derive from display link, but using a stable ~frame time works well for feel.
-        // If dt not provided, approximate using display refresh period if available.
+        let now = ProcessInfo.processInfo.systemUptime
         let dtSeconds: Double
-        if let dt {
-            dtSeconds = max(1.0 / 240.0, min(1.0 / 30.0, dt))
-        } else if displayLink != nil {
-            dtSeconds = nominalFrameDurationSeconds
+        if let lastTickTime {
+            dtSeconds = max(1.0 / 240.0, min(1.0 / 30.0, now - lastTickTime))
         } else {
             dtSeconds = 1.0 / 120.0
         }
+        lastTickTime = now
 
         // Smooth by distributing remaining delta with a 1st-order low-pass style step response.
         // alpha = 1 - exp(-dt/tau)  -> fraction to emit this frame.
-        let alpha: Double
-        if dt == nil, displayLink != nil {
-            alpha = cachedFrameAlpha
-        } else {
-            alpha = 1.0 - exp(-dtSeconds / tuning.tauSeconds)
-        }
+        let alpha = 1.0 - exp(-dtSeconds / tuning.tauSeconds)
 
         let frameX = remainingX * alpha
         let frameY = remainingY * alpha
@@ -614,16 +584,12 @@ private final class ScrollSmoother {
         }
     }
 
-    private func updateCachedFrameAlpha() {
-        cachedFrameAlpha = 1.0 - exp(-nominalFrameDurationSeconds / tuning.tauSeconds)
-    }
-
     private func postSmoothedScroll(deltaX: Double, deltaY: Double, continuous: Bool, intScaleX: Double, intScaleY: Double) -> Bool {
         carryScaledX += deltaX * intScaleX
         carryScaledY += deltaY * intScaleY
 
-        let intX = Int32(carryScaledX.rounded())
-        let intY = Int32(carryScaledY.rounded())
+        let intX = Self.roundedInt32Clamped(carryScaledX)
+        let intY = Self.roundedInt32Clamped(carryScaledY)
         if intX == 0 && intY == 0 {
             return false
         }
@@ -646,8 +612,11 @@ private final class ScrollSmoother {
 
         // CGScrollWheelEventDeltaAxis1/2 is integer-based, but PointDeltaAxis is Double.
         // Use pixel units. Some apps rely more on integer deltas than PointDelta.
-        let intY = Int32((deltaY * intScaleY).rounded())
-        let intX = Int32((deltaX * intScaleX).rounded())
+        let intY = roundedInt32Clamped(deltaY * intScaleY)
+        let intX = roundedInt32Clamped(deltaX * intScaleX)
+        if intX == 0 && intY == 0 {
+            return
+        }
         guard let e = CGEvent(scrollWheelEvent2Source: source, units: .pixel, wheelCount: 2, wheel1: intY, wheel2: intX, wheel3: 0) else {
             return
         }
@@ -663,6 +632,16 @@ private final class ScrollSmoother {
         e.setIntegerValueField(.scrollWheelEventIsContinuous, value: continuous ? 1 : 0)
         e.flags = flags
         e.post(tap: .cghidEventTap)
+    }
+
+    private static func roundedInt32Clamped(_ value: Double) -> Int32 {
+        guard value.isFinite else { return 0 }
+        let rounded = value.rounded()
+        let minValue = Double(Int32.min)
+        let maxValue = Double(Int32.max)
+        if rounded <= minValue { return Int32.min }
+        if rounded >= maxValue { return Int32.max }
+        return Int32(rounded)
     }
 }
 
