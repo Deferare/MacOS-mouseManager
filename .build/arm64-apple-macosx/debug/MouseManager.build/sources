@@ -1,10 +1,14 @@
 /Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift
+/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragMomentumAnimator.swift
+/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragScrollState.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift
+/Users/deferare/Main/MacOS-mouseManager/Sources/ScrollSmoother.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift
+/Users/deferare/Main/MacOS-mouseManager/Sources/SyntheticEventSource.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift
 /Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift

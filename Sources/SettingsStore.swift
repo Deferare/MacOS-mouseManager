@@ -63,17 +63,17 @@ final class SettingsStore: ObservableObject {
     @AppStorage("button5ClickAction") var button5ClickAction: String = Defaults.button5ClickAction { didSet { notifyIfChanged(oldValue, button5ClickAction) } }
 
     var middleClickButtonAction: ButtonAction {
-        get { decodeButtonAction(middleClickAction) }
+        get { ButtonAction(storedValue: middleClickAction) }
         set { middleClickAction = newValue.rawValue }
     }
 
     var button4ButtonAction: ButtonAction {
-        get { decodeButtonAction(button4ClickAction) }
+        get { ButtonAction(storedValue: button4ClickAction) }
         set { button4ClickAction = newValue.rawValue }
     }
 
     var button5ButtonAction: ButtonAction {
-        get { decodeButtonAction(button5ClickAction) }
+        get { ButtonAction(storedValue: button5ClickAction) }
         set { button5ClickAction = newValue.rawValue }
     }
 
@@ -125,10 +125,6 @@ final class SettingsStore: ObservableObject {
             button5ClickAction: button5ClickAction
         )
     }
-
-    private func decodeButtonAction(_ rawValue: String) -> ButtonAction {
-        ButtonAction(rawValue: rawValue) ?? .none
-    }
 }
 
 struct SettingsSnapshot: Equatable {
@@ -144,15 +140,27 @@ struct SettingsSnapshot: Equatable {
     let button5ClickAction: String
 
     var middleClickButtonAction: ButtonAction {
-        ButtonAction(rawValue: middleClickAction) ?? .none
+        ButtonAction(storedValue: middleClickAction)
     }
 
     var button4ButtonAction: ButtonAction {
-        ButtonAction(rawValue: button4ClickAction) ?? .none
+        ButtonAction(storedValue: button4ClickAction)
     }
 
     var button5ButtonAction: ButtonAction {
-        ButtonAction(rawValue: button5ClickAction) ?? .none
+        ButtonAction(storedValue: button5ClickAction)
+    }
+
+    var hasButtonActions: Bool {
+        middleClickButtonAction != .none ||
+            button4ButtonAction != .none ||
+            button5ButtonAction != .none
+    }
+}
+
+private extension ButtonAction {
+    init(storedValue: String) {
+        self = ButtonAction(rawValue: storedValue) ?? .none
     }
 }
 

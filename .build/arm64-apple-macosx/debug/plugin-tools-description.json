@@ -36,6 +36,14 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragMomentumAnimator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragScrollState.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift"
         },
         {
@@ -44,11 +52,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/ScrollSmoother.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift"
         },
         {
           "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SyntheticEventSource.swift"
         },
         {
           "kind" : "file",
@@ -98,10 +114,14 @@
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ContentView.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapManager.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/EventTapRunLoopHost.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragMomentumAnimator.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragScrollState.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollSmoother.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o",
+        "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SyntheticEventSource.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AboutView.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/AppSection.swift.o",
         "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ButtonsView.swift.o",
@@ -182,6 +202,14 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragMomentumAnimator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragScrollState.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o"
         },
         {
@@ -190,11 +218,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollSmoother.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SettingsStore.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SyntheticEventSource.swift.o"
         },
         {
           "kind" : "file",
@@ -238,10 +274,14 @@
         "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragMomentumAnimator.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragScrollState.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/ScrollSmoother.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift",
+        "/Users/deferare/Main/MacOS-mouseManager/Sources/SyntheticEventSource.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift",
         "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift",
@@ -269,10 +309,14 @@
       "/Users/deferare/Main/MacOS-mouseManager/Sources/ContentView.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapManager.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/EventTapRunLoopHost.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragMomentumAnimator.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragScrollState.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/PreviewSupport.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/ScrollSmoother.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift",
+      "/Users/deferare/Main/MacOS-mouseManager/Sources/SyntheticEventSource.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AboutView.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/AppSection.swift",
       "/Users/deferare/Main/MacOS-mouseManager/Sources/Views/ButtonsView.swift",
@@ -392,6 +436,14 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragMomentumAnimator.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MiddleDragScrollState.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/MouseManagerApp.swift"
         },
         {
@@ -400,11 +452,19 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/ScrollSmoother.swift"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SettingsStore.swift"
         },
         {
           "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SharedTapContext.swift"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/Sources/SyntheticEventSource.swift"
         },
         {
           "kind" : "file",
@@ -490,11 +550,23 @@
         },
         {
           "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragMomentumAnimator.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MiddleDragScrollState.swift.o"
+        },
+        {
+          "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/MouseManagerApp.swift.o"
         },
         {
           "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/PreviewSupport.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/ScrollSmoother.swift.o"
         },
         {
           "kind" : "file",
@@ -507,6 +579,10 @@
         {
           "kind" : "file",
           "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SharedTapContext.swift.o"
+        },
+        {
+          "kind" : "file",
+          "name" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.build/SyntheticEventSource.swift.o"
         }
       ],
       "outputFilePath" : "/Users/deferare/Main/MacOS-mouseManager/.build/arm64-apple-macosx/debug/MouseManager.product/Objects.LinkFileList"

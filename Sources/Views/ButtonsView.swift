@@ -3,6 +3,17 @@ import SwiftUI
 struct ButtonsView: View {
     @EnvironmentObject private var settings: SettingsStore
 
+    private struct AdditionalButtonSection: Identifiable {
+        let title: String
+        let actionKeyPath: ReferenceWritableKeyPath<SettingsStore, ButtonAction>
+        var id: String { title }
+    }
+
+    private let additionalButtonSections: [AdditionalButtonSection] = [
+        AdditionalButtonSection(title: "Button 4", actionKeyPath: \.button4ButtonAction),
+        AdditionalButtonSection(title: "Button 5", actionKeyPath: \.button5ButtonAction)
+    ]
+
     private let actions = ButtonAction.allCases
 
     private func actionBinding(_ keyPath: ReferenceWritableKeyPath<SettingsStore, ButtonAction>) -> Binding<ButtonAction> {
@@ -45,12 +56,10 @@ struct ButtonsView: View {
                 }
             }
 
-            Section("Button 4") {
-                actionPicker(actionBinding(\.button4ButtonAction))
-            }
-
-            Section("Button 5") {
-                actionPicker(actionBinding(\.button5ButtonAction))
+            ForEach(additionalButtonSections) { section in
+                Section(section.title) {
+                    actionPicker(actionBinding(section.actionKeyPath))
+                }
             }
         }
     }
