@@ -8,7 +8,7 @@ final class SettingsStore: ObservableObject {
         static let smoothScrollingEnabled: Bool = false
         static let smoothnessLevel: Double = 0.33
         static let reverseDirection: Bool = false
-        static let speedMultiplier: Double = 5.0
+        static let speedMultiplier: Double = 7.0
         static let middleDragScrollingEnabled: Bool = false
         static let middleDragInertiaStrength: Double = 0.33
 
