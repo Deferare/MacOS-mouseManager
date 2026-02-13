@@ -38,6 +38,22 @@ final class EventTapManager: ObservableObject {
     private var isAwaitingAccessibilityGrant: Bool = false
     private var awaitingAccessibilityGrantDeadline: TimeInterval?
     private weak var settingsStore: SettingsStore?
+    private var workspaceObserverTokens: [NSObjectProtocol] = []
+
+    init() {
+        let center = NSWorkspace.shared.notificationCenter
+        let didWakeToken = center.addObserver(
+            forName: NSWorkspace.didWakeNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            Task { @MainActor in
+                self.recoverEventPipelineAfterWake()
+            }
+        }
+        workspaceObserverTokens = [didWakeToken]
+    }
 
     func apply(settings: SettingsStore) {
         settingsStore = settings
@@ -181,6 +197,19 @@ final class EventTapManager: ObservableObject {
 
     deinit {
         trustPollTimer?.invalidate()
+        let center = NSWorkspace.shared.notificationCenter
+        for token in workspaceObserverTokens {
+            center.removeObserver(token)
+        }
+        workspaceObserverTokens.removeAll()
+    }
+
+    private func recoverEventPipelineAfterWake() {
+        guard let settingsStore else { return }
+        // Sleep/wake can leave the wheel smoothing pipeline stale on some setups.
+        // Recreating the tap/context is cheap and restores wheel delivery deterministically.
+        stop()
+        apply(settings: settingsStore)
     }
 
     private func startIfNeeded(settings: SettingsSnapshot) -> Bool {
