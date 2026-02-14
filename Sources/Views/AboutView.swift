@@ -2,17 +2,30 @@ import SwiftUI
 
 struct AboutView: View {
     private let sponsorURL = URL(string: "https://github.com/sponsors/deferare")
+    private let supportEmail = "deferare@icloud.com"
 
     var body: some View {
         Form {
             Section {
                 FormRowLabel(
                     "Mouse Manager",
-                    subtitle: "A lightweight macOS utility for mouse buttons and smooth scrolling."
+                    subtitle: "Public Preview for macOS 26+ focused on mouse buttons and smooth scrolling."
                 )
                 FormRowLabel(
                     "Notes",
-                    subtitle: "This is a starter project. Button remapping and scroll smoothing require Accessibility permission and more advanced event processing."
+                    subtitle: "This build is distributed as a Public Preview. First launch may require right-click Open and Open Anyway in Privacy & Security."
+                )
+                FormRowLabel(
+                    "Permissions",
+                    subtitle: "Mouse and scroll interception features require Accessibility permission."
+                )
+                FormRowLabel(
+                    "Updates",
+                    subtitle: "Updates are manual. Install the latest GitHub Release ZIP and replace the app in /Applications."
+                )
+                FormRowLabel(
+                    "Support Email",
+                    subtitle: "\(supportEmail) (subject: [MouseManager Preview])"
                 )
             }
 
