@@ -34,7 +34,7 @@ struct ButtonsView: View {
 
     var body: some View {
         Form {
-            Section("Middle Button") {
+            Section {
                 actionPicker(actionBinding(\.middleClickButtonAction))
 
                 Toggle(isOn: $settings.middleDragScrollingEnabled) {
@@ -54,11 +54,15 @@ struct ButtonsView: View {
                 ) { value in
                     "\(Int((value * 100).rounded()))%"
                 }
+            } header: {
+                Text("Middle Button")
             }
 
             ForEach(additionalButtonSections) { section in
-                Section(section.title) {
+                Section {
                     actionPicker(actionBinding(section.actionKeyPath))
+                } header: {
+                    Text(section.title)
                 }
             }
         }

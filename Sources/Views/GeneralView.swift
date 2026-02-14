@@ -32,7 +32,7 @@ struct GeneralView: View {
                 }
                 .toggleStyle(.switch)
 
-                HStack(alignment: .firstTextBaseline) {
+                HStack(alignment: .center) {
                     FormRowLabel(
                         "Quit App",
                         subtitle: "Mouse Manager will stop until you launch it again."
@@ -45,14 +45,18 @@ struct GeneralView: View {
             }
 
             Section("Permissions") {
-                HStack(alignment: .firstTextBaseline) {
+                HStack(alignment: .center) {
                     FormRowLabel(
                         "Accessibility",
                         subtitle: "To modify mouse/scroll behavior, macOS requires Accessibility permission."
                     )
                     Spacer()
-                    Text(tapManager.accessibilityStatus.title)
-                        .foregroundStyle(.secondary)
+                    HStack(spacing: 6) {
+                        Image(systemName: tapManager.accessibilityStatus.icon)
+                        Text(tapManager.accessibilityStatus.title)
+                    }
+                    .foregroundStyle(tapManager.accessibilityStatus.color)
+                    
                     Button("Request…") { tapManager.requestAccessibilityPermission(forceOpenSettings: true) }
                 }
             }
@@ -66,6 +70,20 @@ private extension AccessibilityStatus {
         case .unknown: return "Unknown"
         case .granted: return "Granted"
         case .denied: return "Not granted"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .granted: return "checkmark.circle.fill"
+        case .denied, .unknown: return "exclamationmark.triangle.fill"
+        }
+    }
+
+    var color: Color {
+        switch self {
+        case .granted: return .green
+        case .denied, .unknown: return .orange
         }
     }
 }
