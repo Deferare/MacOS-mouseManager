@@ -113,6 +113,7 @@ struct AboutView: View {
         VStack(alignment: .leading, spacing: 20) {
             content()
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
         .padding(28)
         .background(
             RoundedRectangle(cornerRadius: 24, style: .continuous)
