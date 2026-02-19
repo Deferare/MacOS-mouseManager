@@ -1,9 +1,9 @@
 import SwiftUI
-import StoreKit
 
 struct AboutView: View {
     private let supportEmail = "deferare@icloud.com"
-    @StateObject private var donationStore = DonationStore()
+    private let repositoryURL = URL(string: "https://github.com/Deferare/MacOS-mouseManager")!
+    private let sponsorsURL = URL(string: "https://github.com/sponsors/Deferare")!
 
     var body: some View {
         Form {
@@ -25,6 +25,13 @@ struct AboutView: View {
                     subtitle: "Updates are manual. Install the latest GitHub Release ZIP and replace the app in /Applications."
                 )
                 FormRowLabel(
+                    "Open Source",
+                    subtitle: "Mouse Manager is open-source and maintained on GitHub."
+                )
+                Link(destination: repositoryURL) {
+                    Label("View Repository", systemImage: "chevron.left.forwardslash.chevron.right")
+                }
+                FormRowLabel(
                     "Support Email",
                     subtitle: "\(supportEmail) (subject: [MouseManager Preview])"
                 )
@@ -34,104 +41,18 @@ struct AboutView: View {
                 VStack(alignment: .leading, spacing: 12) {
                     FormRowLabel(
                         "Support Mouse Manager",
-                        subtitle: "If this app helps your workflow, you can support future development."
+                        subtitle: "If this app helps your workflow, you can support ongoing open-source development via GitHub Sponsors."
                     )
-
-                    if donationStore.isLoadingProducts {
-                        ProgressView("Loading donation options...")
-                    } else if donationStore.products.isEmpty {
-                        FormHelpText(text: "No donation products are available yet. Check App Store Connect product IDs.", leadingPadding: 0)
-                    } else {
-                        HStack(spacing: 10) {
-                            ForEach(donationStore.products, id: \.id) { product in
-                                Button {
-                                    Task {
-                                        await donationStore.purchase(product)
-                                    }
-                                } label: {
-                                    Label(product.displayPrice, systemImage: "heart.fill")
-                                        .frame(minWidth: 72)
-                                }
-                                .buttonStyle(.borderedProminent)
-                                .disabled(donationStore.isPurchasing)
-                            }
-                        }
+                    Link(destination: sponsorsURL) {
+                        Label("Sponsor on GitHub", systemImage: "heart.fill")
                     }
-
-                    if donationStore.isPurchasing {
-                        ProgressView("Processing purchase...")
-                            .controlSize(.small)
-                    }
-
-                    if let statusMessage = donationStore.statusMessage {
-                        Text(statusMessage)
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-                    }
+                    .buttonStyle(.link)
+                    FormHelpText(
+                        text: "Opens github.com/sponsors/Deferare in your default browser.",
+                        leadingPadding: 0
+                    )
                 }
             }
-        }
-        .task {
-            await donationStore.loadProducts()
-        }
-    }
-}
-
-@MainActor
-private final class DonationStore: ObservableObject {
-    @Published private(set) var products: [Product] = []
-    @Published private(set) var isLoadingProducts = false
-    @Published private(set) var isPurchasing = false
-    @Published var statusMessage: String?
-
-    private static let donationProductIDs = [
-        "com.deferare.MouseManager.tip.1",
-        "com.deferare.MouseManager.tip.3",
-        "com.deferare.MouseManager.tip.5"
-    ]
-
-    func loadProducts() async {
-        guard !isLoadingProducts else { return }
-
-        isLoadingProducts = true
-        defer { isLoadingProducts = false }
-
-        do {
-            let loadedProducts = try await Product.products(for: Self.donationProductIDs)
-            let displayOrder = Dictionary(uniqueKeysWithValues: Self.donationProductIDs.enumerated().map { ($1, $0) })
-            products = loadedProducts.sorted { (displayOrder[$0.id] ?? .max) < (displayOrder[$1.id] ?? .max) }
-        } catch {
-            statusMessage = "Couldn't load donation options. \(error.localizedDescription)"
-        }
-    }
-
-    func purchase(_ product: Product) async {
-        guard !isPurchasing else { return }
-
-        isPurchasing = true
-        defer { isPurchasing = false }
-
-        do {
-            let result = try await product.purchase()
-
-            switch result {
-            case .success(let verification):
-                switch verification {
-                case .verified(let transaction):
-                    await transaction.finish()
-                    statusMessage = "Thanks for supporting Mouse Manager."
-                case .unverified(_, let error):
-                    statusMessage = "Purchase verification failed. \(error.localizedDescription)"
-                }
-            case .pending:
-                statusMessage = "Purchase is pending approval."
-            case .userCancelled:
-                statusMessage = "Purchase was cancelled."
-            @unknown default:
-                statusMessage = "Purchase failed due to an unknown error."
-            }
-        } catch {
-            statusMessage = "Purchase failed. \(error.localizedDescription)"
         }
     }
 }

@@ -1,6 +1,6 @@
 # Privacy Policy for MouseManager
 
-Last updated: February 16, 2026
+Last updated: February 19, 2026
 
 MouseManager ("the App") is developed by deferare. This Privacy Policy explains what information the App processes when you use it.
 
@@ -30,12 +30,13 @@ MouseManager requires macOS Accessibility permission to intercept and modify mou
 You can revoke this permission at any time in:
 `System Settings > Privacy & Security > Accessibility`.
 
-## In-App Purchases (Donations)
+## Donations (GitHub Sponsors)
 
-If you choose to support the App via in-app purchase, payment processing is handled by Apple through StoreKit and the App Store.
+If you choose to support MouseManager through GitHub Sponsors, payment processing is handled on GitHub's platform by GitHub and its payment partners.
 
+- MouseManager does not include in-app purchases.
 - MouseManager does not receive your full payment card details.
-- Apple may process purchase-related data under Apple's own privacy policies.
+- GitHub may process sponsorship-related data under GitHub's own privacy policies.
 
 ## Data Sharing
 
